@@ -36,10 +36,11 @@ class ConstructorModel(ChatOpenAI):
         return res
 
     def send(self, human: str, system: str | None = None) -> str | list[str | dict[Any, Any]]:
-        _system = SystemMessage(content=system)
-        _human = HumanMessage(content=human)
+        messages: list[Any] = []
+        if system is not None:
+            messages.append(SystemMessage(content=system))
+        messages.append(HumanMessage(content=human))
 
-        messages = [_system, _human] if _system is not None else [_human]
         return super().invoke(messages).content
 
     # --- new methods: document helpers that delegate to the adapter ---
