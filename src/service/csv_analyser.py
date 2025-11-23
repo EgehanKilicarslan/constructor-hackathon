@@ -9,6 +9,9 @@ from pydantic import BaseModel
 class ProjectInfo(BaseModel):
     title: str
     github_url: str
+    main_categort: str
+    secondary_category: str
+    tags: list[str]
     paper_url: str
     specific_url: str
     documentation_url: str
@@ -41,6 +44,9 @@ class CSVAnalyser:
             return ProjectInfo(
                 title=results.iloc[0]["Title"],
                 github_url=results.iloc[0]["Github URL"],
+                main_categort=results.iloc[0]["Main Category"],
+                secondary_category=results.iloc[0]["Secondary Category"],
+                tags=results.iloc[0]["Tags"],
                 paper_url=results.iloc[0]["Paper URL"],
                 specific_url=results.iloc[0]["Specific URL"],
                 documentation_url=results.iloc[0]["Documentation"],
