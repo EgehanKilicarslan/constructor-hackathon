@@ -26,7 +26,7 @@ class StatefulConstructorAdapter(ConstructorAdapter):
         api_key: str | None = None,
         km_id: str | None = None,
         llm_name: str | None = None,
-        llm_alias: str | None = "gpt-5-pro",
+        llm_alias: str = "gpt-4o-mini",
     ):
         super().__init__(api_url, api_key, km_id, llm_name, llm_alias)
         self.mode = default_model_mode  # used for selecting the mode of the model, LLM_ENGINE_ONLY (default) or KNOWLEDGE_MODEL_ONLY

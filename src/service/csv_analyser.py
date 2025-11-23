@@ -3,7 +3,7 @@ from pathlib import Path
 
 import pandas as pd
 from dotenv import load_dotenv
-from pydantic import BaseModel
+from pydantic import BaseModel, field_validator
 
 
 class ProjectInfo(BaseModel):
@@ -22,6 +22,13 @@ class ProjectInfo(BaseModel):
     extrenal_credentials: str | None = None
     dataset_dependencies: str | None = None
     terminate: bool = False
+
+    @field_validator("tags", mode="before")
+    @classmethod
+    def tag_convert(cls, v: str) -> list[str]:
+        if isinstance(v, str):
+            v2 = v.split(", ")
+            return v2
 
 
 class CSVAnalyser:

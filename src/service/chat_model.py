@@ -1,46 +1,58 @@
 from typing import Any
 
+from langchain_core.messages import HumanMessage, SystemMessage
 from langchain_openai import ChatOpenAI
-from pydantic import HttpUrl
+from pydantic import PrivateAttr
 
 from adapter import StatelessConstructorAdapter
 
 
 class ConstructorModel(ChatOpenAI):
+    _adapter: StatelessConstructorAdapter = PrivateAttr()
+
     def __init__(
         self,
         adapter: StatelessConstructorAdapter | None = None,
-        api_url: HttpUrl | None = None,
-        api_key: str | None = None,
-        km_id: str | None = None,
-        llm_name: str | None = None,
-        llm_alias: str | None = "gpt-5-pro",
+        model: str = "gpt-4o-mini",
         **kwargs,
     ) -> None:
         if adapter is None:
-            self.adapter = StatelessConstructorAdapter(
-                api_url=api_url,
-                api_key=api_key,
-                km_id=km_id,
-                llm_name=llm_name,
-                llm_alias=llm_alias,
-            )
+            _adapter = StatelessConstructorAdapter(llm_alias=model)
         else:
-            self.adapter = adapter
+            _adapter = adapter
 
         kwargs["api_key"] = "unused"
-        kwargs["base_url"] = f"{self.adapter.api_url}/knowledge-models/{self.adapter.km_id}"
-        kwargs["model"] = self.adapter.llm_alias
+        kwargs["base_url"] = f"{_adapter.api_url}/knowledge-models/{_adapter.km_id}"
+        kwargs["model"] = _adapter.llm_alias
 
         super().__init__(**kwargs)
+        self._adapter = _adapter
 
     def _get_request_payload(self, *args, **kwargs) -> dict[Any, Any]:
         res = super()._get_request_payload(*args, **kwargs)
+        res["extra_headers"] = self._adapter._get_headers()
+        res["extra_headers"]["X-KM-Extension"] = "direct_llm"
 
-        base_headers = res.get("extra_headers", {})
-        adapter_headers = self.adapter._get_headers()
-        base_headers.update(adapter_headers)
-        base_headers["X-KM-Extension"] = "direct_llm"
-
-        res["extra_headers"] = base_headers
         return res
+
+    def send(self, human: str, system: str | None = None) -> str | list[str | dict[Any, Any]]:
+        _system = SystemMessage(content=system)
+        _human = HumanMessage(content=human)
+
+        messages = [_system, _human] if _system is not None else [_human]
+        return super().invoke(messages).content
+
+    # --- new methods: document helpers that delegate to the adapter ---
+    def add_document(self, file_path: str) -> dict | None:
+        """
+        Upload a file to the Constructor knowledge model via the adapter.
+        Returns the adapter's JSON response or raises on error.
+        """
+        return self._adapter.add_document(file_path)
+
+    def add_facts(self, content: dict) -> dict | None:
+        """
+        Add key/value facts to the KM by creating a temporary markdown and
+        uploading it via the adapter (uses Adapter.add_facts).
+        """
+        return self._adapter.add_facts(content)

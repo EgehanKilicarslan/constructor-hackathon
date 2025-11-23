@@ -28,7 +28,7 @@ class AdapterSettings(BaseModel):
     api_key: str = Field(min_length=1)
     km_id: str = Field(min_length=1)
     llm_name: str | None = None
-    llm_alias: str = "gpt-5-pro"
+    llm_alias: str = "gpt-4o-mini"
 
     @classmethod
     def from_env(

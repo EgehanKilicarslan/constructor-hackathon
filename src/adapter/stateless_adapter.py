@@ -15,7 +15,7 @@ class StatelessConstructorAdapter(ConstructorAdapter):
         api_key: str | None = None,
         km_id: str | None = None,
         llm_name: str | None = None,
-        llm_alias: str | None = "gpt-5-pro",
+        llm_alias: str = "gpt-4o-mini",
     ):
         super().__init__(api_url, api_key, km_id, llm_name, llm_alias)
 
