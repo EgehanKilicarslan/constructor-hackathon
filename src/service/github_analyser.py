@@ -26,16 +26,30 @@ class GithubAnalyser:
         # Create a unique path for this repo to avoid conflicts/overwrites
         self.save_dir = save_path / f"{self.owner}_{self.repo_name}"
 
-        # Session will be initialized in __enter__
+        # Session will be initialized in start() or __enter__
         self.session: requests.Session | None = None
         self.api_base = f"https://api.github.com/repos/{self.owner}/{self.repo_name}"
 
     def __enter__(self):
+        """Context Manager Entry: Initializes the session and directory."""
+        self.start()
+        return self
+
+    def __exit__(self, exc_type, exc_value, traceback):
+        """Context Manager Exit: Cleans up resources."""
+        self.cleanup()
+        if exc_type:
+            logger.error(f"An error occurred during Github analysis: {exc_value}")
+
+    def start(self):
         """
-        Context Manager Entry:
-        1. Starts a persistent HTTP session for performance.
-        2. Creates the directory structure on disk.
+        Starts the analysis session manually.
+        Creates the HTTP session and the directory structure.
         """
+        if self.session is not None:
+            logger.debug("Session is already active.")
+            return
+
         self.session = requests.Session()
         self.session.headers.update({"Accept": "application/vnd.github.v3+json"})
 
@@ -46,24 +60,22 @@ class GithubAnalyser:
         self.save_dir.mkdir(parents=True, exist_ok=True)
         logger.info(f"Started analysis session for {self.repo_name}. Save path: {self.save_dir}")
 
-        return self
-
-    def __exit__(self, exc_type, exc_value, traceback):
+    def cleanup(self):
         """
-        Context Manager Exit:
-        1. Closes the HTTP session.
-        2. Cleans up (deletes) the downloaded files and folder.
+        Manually cleans up resources.
+        Closes the HTTP session and deletes the downloaded files.
         """
         if self.session:
             self.session.close()
+            self.session = None
 
         # Cleanup: Remove the entire directory tree
-        if self.save_dir.exists():
-            shutil.rmtree(self.save_dir)
-            logger.info(f"Cleanup successful: Removed {self.save_dir}")
-
-        if exc_type:
-            logger.error(f"An error occurred during Github analysis: {exc_value}")
+        try:
+            if self.save_dir.exists():
+                shutil.rmtree(self.save_dir)
+                logger.info(f"Cleanup successful: Removed {self.save_dir}")
+        except Exception as e:
+            logger.warning(f"Failed to cleanup directory {self.save_dir}: {e}")
 
     def _parse_repo_url(self) -> tuple[str, str]:
         """Parses the owner and repository name from the URL."""
@@ -74,14 +86,21 @@ class GithubAnalyser:
         return match.group(1), match.group(2)
 
     def _ensure_session(self) -> requests.Session:
-        """Helper to ensure session is active for type safety and to prevent misuse."""
+        """
+        Helper to ensure session is active.
+        If not active (manual usage without start()), it starts it automatically.
+        """
         if self.session is None:
-            raise RuntimeError(
-                "Session is not initialized. Please use the 'with GithubAnalyser(...) as ...' context manager pattern."
-            )
+            logger.info("Session not active, starting automatically...")
+            self.start()
+
+        # We are sure session is not None after start(), but type checker might need help
+        if self.session is None:
+            raise RuntimeError("Failed to create session.")
+
         return self.session
 
-    def _get_default_branch(self) -> str:
+    def get_default_branch(self) -> str:
         """
         Determines the default branch (main, master, etc.) via API.
         If API fails, it attempts to guess common names.
@@ -97,8 +116,6 @@ class GithubAnalyser:
             return branch
         except Exception as e:
             logger.warning(f"Could not detect default branch via API: {e}. Trying fallbacks.")
-
-            # Fallback: Check if 'master' is used if 'main' fails
             return "master"
 
     def get_repo_structure(self) -> list[dict]:
@@ -106,7 +123,7 @@ class GithubAnalyser:
         Fetches the entire file tree of the repository recursively.
         """
         session = self._ensure_session()
-        default_branch = self._get_default_branch()
+        default_branch = self.get_default_branch()
 
         try:
             # GitHub Git Database API: Get Tree recursively
@@ -164,16 +181,16 @@ class GithubAnalyser:
         # Download the identified files
         logger.info(f"Found {len(to_download)} relevant files. Starting download...")
         for remote_path, category in to_download:
-            local_path = self._download_file(remote_path)
+            local_path = self.download_file(remote_path)
             if local_path:
                 downloaded_files[category].append(local_path)
 
         return downloaded_files
 
-    def _download_file(self, remote_path: str) -> Path | None:
+    def download_file(self, remote_path: str) -> Path | None:
         """
-        Downloads a specific file's content from the GitHub API, decodes it,
-        and saves it to the local file system.
+        Downloads a specific file's content from the GitHub API.
+        Public method, can be used to download specific files manually.
         """
         session = self._ensure_session()
 
