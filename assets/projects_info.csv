@@ -1,0 +1,1400 @@
+Title,Paper URL,Specific URL,Github URL,Language,Size,Activity,Age (years),Popularity,Documentation,Dependencies,Special features,Native Extensions,Custom Build,Complex Dependency Graph,Multi-Service Required,Pipeline Complexity,Model Size Heavy,Tested,Standalone Friendly,Entry Points (Scripts),Entry Points (Tests),Path / Source,Detection Method,Execution Command,Hardware (GPU/CPU),External Credentials,Dataset Dependency,Known problems,Terminate,Memory profile,Load profile
+hyperopt,https://pdfs.semanticscholar.org/d4f4/9717c9adb46137f49606ebbdf17e3598b5a5.pdf ,,https://github.com/hyperopt/hyperopt,Python,15K–20K LOC,1223 commits,13,7.4k stars / 1.2k forks,http://hyperopt.github.io/hyperopt,4,"Hyperopt is designed to support different kinds of trial databases. The default trial database (Trials) is implemented with Python lists and dictionaries. 
+The default implementation is a reference implementation and it is easy to work with, but it does not support the asynchronous updates required to evaluate trials in parallel. 
+For parallel search, hyperopt includes a MongoTrials implementation that supports asynchronous updates.", No,No,No,No,No,No,Yes,Yes,python -m hyperopt (Primary); hyperopt/mongoexp.py; hyperopt-mongo-worker,hyperopt/tests/; run_tests.sh ,"hyperopt/init.py
+hyperopt/mongoexp.py
+hyperopt/tests/
+run_tests.sh
+pyproject.toml
+README.rst","Docs (Basic Tutorial) — https://hyperopt.github.io/hyperopt/tutorials/01.BasicTutorial/
+Docs (MongoDB / MongoTrials) — https://hyperopt.github.io/hyperopt/scaleout/mongodb/
+Docs (Running tests) — https://hyperopt.github.io/hyperopt/setup/running-tests/ 
+pyproject [project.scripts]","python -c ""from hyperopt import fmin, tpe, hp; best=fmin(lambda x:(x-3)**2, hp.uniform('x',-5,5), algo=tpe.suggest, max_evals=20); print(best)"" (source: Docs “Basic Tutorial”)
+HYPEROPT_FMIN_SEED=3 ./run_tests.sh --no-spark (source: Docs “Running tests”)
+python -m hyperopt.mongoexp --mongo=localhost:27017/hyperopt_db --poll-interval=0.1 (source: Docs “MongoDB/MongoTrials”)",CPU (GPU not required),None (MongoDB/Spark only if used),None,39 Issues open and 1 PR hanging. Last commit 5 months ago. Documentation with broken links. Perhaps it is being abandoned,Yes,"autogen.py: 
+total memory forecasted: Unkonw
+peak memory forecasted: Unkown",{}
+pymatgen, ,needs login credential,https://github.com/materialsproject/pymatgen,Python,40K–45K LOC,Very active,12,1.6k stars / 450 forks,https://pymatgen.org/,35,"It is a tool used for academic research and is actively developed by a large community of people, bringing frequent releases. 
+As a rule of thumb, pymatgen will support whatever versions of Python the latest version of numpy supports. 
+Pymatgen is structured in a highly object-oriented manner. ", No,No,Yes,No,No,No,Yes,Yes,pymatgen.cli.pmg (Primary); pymatgen.cli.get_environment; pymatgen.cli.feff_plot_dos; pymatgen.cli.feff_plot_cross_section,tests/,"src/pymatgen/cli/pmg.py
+src/pymatgen/cli/
+tests/
+pyproject.toml
+README.md ","CLI docs (pymatgen.cli package): https://pymatgen.org/pymatgen.cli.html
+Docs (Installation → pmg config): https://pymatgen.org/installation.html
+Docs (Usage/MPRester API key): https://pymatgen.org/usage.html
+pyproject [project.scripts]","PYTHONPATH=src python -m pymatgen.cli.pmg --help (source: CLI docs)
+PYTHONPATH=src python -m pymatgen.cli.pmg config --help (source: Installation page)
+PYTHONPATH=src python -m pymatgen.cli.get_environment --help (source: CLI docs → get_environment)
+PYTHONPATH=src pytest -q (source: repo has tests/)",CPU (no GPU required),"Optional Materials Project API key for MPRester (e.g., PMG_MAPI_KEY via config/env)",None (some features require user-provided VASP POTCAR path via pmg config),Errors in pymatgen/transformations/advanced_transformations.py leading to incorrect behavior,Yes,"generate_periodic_table_yaml_json.py: 
+total_memory_forecasted: 78.356 MB
+peak_memory_forecasted: 13.892 MB
+
+regen_libxcfunc.py:  
+total_memory_forecasted: 35.966 MB
+peak_memory_forecasted: 6.6653 MB
+
+potcar_scrambler.py: 
+total_memory_forecasted: 104.299 MB
+peak_memory_forecasted: 28.436 MB
+
+plane_multiplicity.py:  
+total_memory_forecasted: 30.318 MB
+peak_memory_forecasted: 5.133 MB
+
+explicit_permutations_plane_algorithm.py:
+total_memory_forecasted: 81.341 MB
+peak_memory_forecasted: 15.922 MB
+
+equivalent_indices.py:  
+total_memory_forecasted: 4.853 MB
+peak_memory_forecasted: 1.414 MB
+
+view_environment.py:
+total_memory_forecasted: 82.244 MB
+peak_memory_forecasted: 13.031 MB
+
+explicit_permutations.py:
+total_memory_forecasted: 83.960 MB
+peak_memory_forecasted: 16.182 MB
+
+get_plane_permutations_optimized.py:  
+total_memory_forecasted: 81.330 MB
+peak_memory_forecasted: 14.772 MB
+
+multi_weights_strategy_parameters.py:
+total_memory_forecasted: 87.917 MB
+peak_memory_forecasted: 13.516 MB
+
+utils..py:
+total_memory_forecasted: 35.047 MB
+peak_memory_forecasted: 6.601 MB
+
+feff_plot_dos.py:  
+total_memory_forecasted: 89.853 MB
+peak_memory_forecasted: 16.129 MB
+
+feff_plot_cross_section.py:
+total_memory_forecasted: 138.704 MB
+peak_memory_forecasted: 49.982 MB
+
+pmg_potcar.py:
+total_memory_forecasted: 100.323 MB
+peak_memory_forecasted: 119.239 MB
+
+get_environment.py:  
+total_memory_forecasted: 81.673 MB
+peak_memory_forecasted: 24.407 MB
+
+pmg.py:
+total_memory_forecasted: 139.660 MB
+peak_memory_forecasted: 57.371 MB","generate_periodic_table_yaml_json.py:
+percent_cpu: 33.14
+percent_gpu: 0.0"
+PiNN,https://teoroo-cmc.github.io/PiNN/master/,,https://github.com/Teoroo-CMC/PiNN,Python,10K–15K LOC,Active development,5,112 stars / 35 forks,https://teoroo-cmc.github.io/PiNN/master/,18,"Library built on top of TensorFlow for performing atomistic ML tasks. Besides training ML interatomic potentials, PiNN can also predict physical and chemical properties of molecules and materials. 
+In order to be both flexible and scalable, PiNN is built with modularized components and fully adheres to TensorFlow's high-level Estimator and Dataset API", No,No,Yes,No,Yes,No,Yes,Yes,python -m pinn.cli (Primary); python -m pinn.cli.convert; python -m pinn.cli.train; python -m pinn.cli.log; python -m pinn.cli.report,tests/,"pinn/cli.py
+pinn/
+tests/
+pyproject.toml
+README.md
+docs/","Docs “Using the CLI” (quick start) — https://teoroo-cmc.github.io/PiNN/master/usage/quick_start/
+CLI pages — https://teoroo-cmc.github.io/PiNN/master/usage/cli/convert/
+ ; https://teoroo-cmc.github.io/PiNN/master/usage/cli/train/
+ ; https://teoroo-cmc.github.io/PiNN/master/usage/cli/log/
+ ; https://teoroo-cmc.github.io/PiNN/master/usage/cli/report/
+Repo structure (CLI and tests) noted in README/docs","python -m pinn.cli --help (source: Docs “Using the CLI”)
+python -m pinn.cli.convert --help (source: CLI docs: convert)
+python -m pinn.cli.train --help (source: CLI docs: train)
+python -m pinn.cli.log --help (source: CLI docs: log)
+python -m pinn.cli.report --help (source: CLI docs: report)
+pytest -q (source: repo has tests/)",GPU optional (CPU supported via TensorFlow CPU),None,User-provided datasets; converters available via pinn convert,,Yes,"cli.py:
+total memory forecasted: 5.192 MB
+peak memory forecasted: 2.253 MB",??
+RadonPy,https://arxiv.org/abs/2203.14090,https://arxiv.org/pdf/2203.14090,https://github.com/RadonPy/RadonPy,Python,20K–25K LOC,Active development,3,175 stars / 27 forks,README in repo,8,"First open-source Python library for fully automated calculation for a comprehensive set of polymer properties.
+
+The PyPI package is available, but Psi4 can not be installed by pip install. 
+
+This could be a nice challenge to solve in order to improve the project handling errors", No,No,Yes,No,Yes,No,No,Yes,optuna CLI (Primary),,"sample_script/
+radonpy/
+yaml/
+README.md ","README (installation & usage mention demo scripts and workflow examples)
+Repository layout shows sample_script/, radonpy/, yaml/","PYTHONPATH=. python sample_script/tc.py (source: sample_script/ demos)
+PYTHONPATH=. python sample_script/eq.py (source: sample_script/ demos)
+PYTHONPATH=. python sample_script/qm.py (source: sample_script/ demos)
+PYTHONPATH=. python sample_script/rst_eq.py (source: sample_script/ demos)",CPU (GPU optional via GPU-enabled LAMMPS),None,"User-provided polymer definitions (e.g., SMILES/repeat units); demos runnable without fixed external dataset",,Yes,"tc.py:
+total memory forecasted: 32.944 MB
+peak memory forecasted: 5.643 MB
+
+eq.py:
+total memory forecasted: 37.966 MB
+peak memory forecasted: 5.621 MB
+
+qm.py:
+total memory forecasted: 46.858 MB
+peak memory forecasted: 7.854 MB
+
+rst_eq.py:
+total memory forecasted: 56.831 MB
+peak memory forecasted: 13.764 MB",??
+optuna,https://arxiv.org/abs/1907.10902,https://arxiv.org/pdf/1907.10902,https://github.com/optuna/optuna,Python,20K LOC,Active development,5,11.9k stars / 1.4k forks,https://optuna.readthedocs.io/,15,"It is an automatic hyperparameter optimization software framework, particularly designed for machine learning.
+It features an imperative, define-by-run style user API.
+Provide Optuna docker images on DockerHub.", No,No,No,No,No,No,Yes,Yes,python -m optuna.cli (Primary),tests/,"optuna/cli.py
+optuna/
+tests/
+README.md
+pyproject.toml","Docs (Command-Line Interface): https://optuna.readthedocs.io/en/stable/reference/cli.html
+Repo file (cli.py) indicates module CLI
+Repo folder (tests/) indicates pytest suite","python -m optuna.cli create-study --storage sqlite:///example.db --study-name demo (source: Docs “CLI”)
+python -m optuna.cli studies --storage sqlite:///example.db (source: Docs “CLI”)
+pytest -q (source: tests/ present in repo)",CPU (GPU not required),None,None,,Yes,"012_artifact_tutorial.py:
+total_memory_forecasted: 81.282 MB
+peak_memory_forecasted: 27.504 MB
+
+004_cli.py:
+total_memory_forecasted: 10.835 MB
+peak_memory_forecasted: 5.630 MB","012_artifact_tutorial.py:
+percent_cpu: 45.47
+percent_gpu: 0.98
+
+004_cli.py:
+percent_cpu: 44.86
+percent_gpu: 0.73"
+UMAP,https://arxiv.org/pdf/1802.03426,,https://github.com/lmcinnes/umap,Python,10k - 15K LOC,Active development,7,7.8k stars / 830 forks,"README and 
+https://umap-learn.readthedocs.io/en/latest/  ",10,"UMAP is a dimension reduction technique.
+It requires Python 3.6 or greater.", No,No,Yes,No,No,No,Yes,Yes,umap/umap_.py (Primary); examples/; umap (console script),umap/tests/,"umap/umap_.py
+umap/
+umap/tests/
+examples/
+README.md
+pyproject.toml","Docs (ReadTheDocs) — https://umap-learn.readthedocs.io/en/latest/
+Repo README and tree show core module, tests, examples","PYTHONPATH=. python -c ""import umap, sklearn.datasets as ds; X,_=ds.load_digits(return_X_y=True); print(umap.UMAP().fit_transform(X).shape)"" (source: Docs API usage)
+pytest -q (source: tests/ present)","CPU; no GPU required (GPU-accelerated UMAP is in RAPIDS cuML, separate project)",None,User-provided data (or scikit-learn toy datasets for demos),"Segmentation faults can occur, especially when using certain distance metrics like Jaccard, due to issues in nearest neighbor search and floating-point errors. A suggested workaround is to binarize the data.
+RecursionError may arise when the dataset contains duplicate points. Removing duplicates before processing is a potential solution.",Yes,,
+MAPIE,https://arxiv.org/pdf/2207.12274,,https://github.com/scikit-learn-contrib/MAPIE,Python,10K - 15k LOC,Active development,3,1.4k stars / 120 forks,"README and 
+https://mapie.readthedocs.io/en/latest/",8,"It is a library hosted on scikit-learn-contrib and it follows scikit-learn guidelines.
+From the paper, MAPIE implements conformal prediction methods for regression and classification settings and is therefore model and (soon to be) use case agnostic. Conformal prediction methods allow MAPIE to have mathematical guarantees on the marginal coverages on the uncertainties.", No,No,No,No,No,No,Yes,Yes,mapie/regression.py (Primary); examples/,mapie/tests/,"examples/
+notebooks/
+mapie/
+requirements.dev.txt
+README.md
+pyproject.toml","Docs (Quick Start) — https://mapie.readthedocs.io/en/latest/quick_start.html
+Docs (Examples galleries) — https://mapie.readthedocs.io/en/latest/examples_regression/index.html
+ ; https://mapie.readthedocs.io/en/latest/examples_classification/index.html
+Repo tree shows examples/, mapie/, notebooks/, and requirements.dev.txt (pytest-based tests)","PYTHONPATH=. python -c 'from mapie.regression import MapieRegressor; from sklearn.linear_model import LinearRegression as LR; from sklearn.datasets import load_diabetes; X,y=load_diabetes(return_X_y=True); m=MapieRegressor(LR()); m.fit(X,y); print(m.predict(X, alpha=0.1)[0].shape)' (source: Docs “Quick Start” pattern)
+pytest -q (source: dev requirements/tests present)
+PYTHONPATH=. python examples/<example_script>.py (source: examples/ folder)",CPU (no GPU required),None,User-provided data (docs use scikit-learn toy datasets),"Incompatibility with scikit-learn version 1.4.2, leading to errors. This issue has been addressed in a subsequent update.
+Issues with certain cross-validation strategies (LeaveOneGroupOut, LeavePGroupsOut) not functioning as expected",Yes,"plot_kim2020_simulations.py: 
+total memory forecasted: 432.113 MB
+peak memory forecasted: 112.331 MB
+",Timed out
+Scanpy,https://genomebiology.biomedcentral.com/articles/10.1186/s13059-017-1382-0,https://genomebiology.biomedcentral.com/counter/pdf/10.1186/s13059-017-1382-0.pdf,https://github.com/scverse/scanpy,Python,30K LOC,Very active,7,2.1k stars / 640 forks,https://scanpy.readthedocs.io/en/stable/ ,35,"It is is a scalable toolkit for analyzing single-cell gene expression data built jointly with anndata. 
+It provides the docker image on DockerHub", No,No,Yes,No,Yes,No,Yes,Yes,src/scanpy/ (Primary); notebooks/,tests/,"src/scanpy/
+tests/
+notebooks/
+README.md
+pyproject.toml","README + repo tree expose src/, tests/, notebooks/ folders
+Docs confirm API usage (e.g., scanpy.pp.neighbors, scanpy.tl.umap) and workflows
+Stable docs landing page used to validate entry points","PYTHONPATH=src python -c ""import anndata as ad, scanpy as sc, sklearn.datasets as ds; X,_=ds.load_digits(return_X_y=True); a=ad.AnnData(X); sc.pp.neighbors(a); sc.tl.umap(a); print(a.obsm['X_umap'].shape)"" (source: docs API patterns)
+pytest -q (source: presence of tests/)",CPU (no GPU required),None,"User-provided single-cell data (e.g., .h5ad); tutorials may download common datasets","Incompatibility with matplotlib version 3.7, causing metaclass issues. Downgrading to matplotlib 3.6 resolves the problem.
+Errors encountered when using sc.pl.dpt_timeseries and dpt_groups_pseudotime functions, possibly due to specific data structures or versions.
+Issues when running scrublet for doublet detection, leading to errors during execution. ",Yes,"towncrier_automation.py:
+total_memory_forecasted: Unknown
+peak_memory_forecasted: Unknown
+
+low-vers.py:
+total_memory_forecasted: Unknown
+peak_memory_forecasted: Unknown
+
+palettes.py:
+total_memory_forecasted: 91.860 MB
+peak_memory_forecasted: 23.886 MB","palettes.py: 
+percent_cpu: 48.13
+percent_gpu: 0.0"
+scores,https://arxiv.org/pdf/2406.07817,,https://github.com/nci/scores/,Python,5K -  10K LOC,Active development,2,165 stars / 30 forks,https://scores.readthedocs.io/en/stable/ ,10," Python package containing mathematical functions for the verification, evaluation and optimisation of forecasts, predictions or models.
+It propose using pixi as an option for environment management.", No,No,No,No,No,No,No,Yes,scores (library import) (Primary),,"scores/
+README.md ","README states library usage; no CLI entry points
+Docs confirm library functions and examples — https://scores.readthedocs.io/en/stable/
+Repo tree shows only scores/ package (no console script)","PYTHONPATH=. python -c ""import scores; print('scores imported')"" (source: package path scores/)
+PYTHONPATH=. python -c ""import scores, inspect; print([m for m in dir(scores) if not m.startswith('_')][:5])"" (source: docs show library-only usage)",CPU,None,User-provided data (forecasts/observations),,Yes,no entry point,no entry point
+DeepHyper,https://joss.theoj.org/papers/10.21105/joss.07975,,https://github.com/deephyper/deephyper,Python,35 - 40K LOC,Very active,5,289 stars / 60 forks,"README and 
+https://deephyper.readthedocs.io/en/stable/ ",17,"It requires Python 3.10 or greater. 
+It is a pure Python package but some features of the package can require external libraries to be installed that require compilation when pre-built binaries are not available for the target system (e.g., Tensorflow or Numpy).
+The package is organized around the modules analysis, ensemble, evaluator, hpo, predictor, stopper.", No,No,Yes,No,Yes,No,Yes,Yes,src/deephyper/ (Primary),tests/,"src/deephyper/
+tests/
+README.md
+pyproject.toml","Docs (Install/Overview confirm Python ≥3.10 and library usage) — https://deephyper.readthedocs.io/en/stable/
+ ; https://deephyper.readthedocs.io/en/latest/install/index.html
+Docs (Running tests indicates tests/) — https://deephyper.readthedocs.io/en/latest/developer_guides/running_tests.html
+API pages (CBO, Evaluator) used for smoke test — https://deephyper.readthedocs.io/en/latest/_autosummary/deephyper.hpo.CBO.html
+ ; https://deephyper.readthedocs.io/en/latest/_autosummary/deephyper.evaluator.html
+Repo tree shows src/deephyper/ and tests/","PYTHONPATH=src python -c ""from deephyper.hpo import HpProblem, CBO; from deephyper.evaluator import Evaluator; p=HpProblem(); p.add_hyperparameter((-1,1),'x'); ev=Evaluator.create(lambda j:j**2, method='process', method_kwargs={'num_workers':2}); print(CBO(p, random_state=0).search(ev, max_evals=10).shape)"" (source: API docs CBO & Evaluator)
+pytest -q (source: Docs “Running tests”)",CPU (GPU optional if user model uses TF/PyTorch),None,User-provided or synthetic (examples often generate simple functions/datasets),,No,,
+OpenEvolve,https://arxiv.org/pdf/2103.16196v2,,https://github.com/codelion/openevolve,Python,5K LOC,Active,4,1.2k stars/ 91 forks,README in repo,8,"It uses Large Language Models to optimize code through an iterative process.
+It orchestrates a pipeline of LLM-based code generation, evaluation, and selection to continuously improve programs for a variety of tasks.", No,No,No,Yes,Yes,No,Yes,No,openevolve-run.py (Primary),tests/,"openevolve-run.py
+examples/function_minimization/
+examples/circle_packing/
+configs/
+openevolve/
+tests/
+README.md ","README “Quick Start” shows runner and example paths
+Repository tree exposes openevolve-run.py, examples/, configs/, tests/
+Example configs default to OpenAI-compatible provider via OPENAI_API_KEY","export OPENAI_API_KEY=""your_api_key"" (source: README Quick Start)
+python openevolve-run.py examples/function_minimization/initial_program.py examples/function_minimization/evaluator.py --config examples/function_minimization/config.yaml --iterations 50 (source: README Quick Start)
+python openevolve-run.py examples/circle_packing/initial_program.py examples/circle_packing/evaluator.py --config examples/circle_packing/config.yaml --iterations 100 (source: README / examples)
+pytest -q (source: tests/ present)",CPU (GPU optional for some domains),OPENAI_API_KEY required (OpenAI-compatible endpoint),None (examples operate on bundled code/evaluators),,Yes,"openevolve-run.py:
+total memory forecasted: 5.333 MB
+peak memory forecasted: 2.304 MB
+
+function_minimization/initial_program.py:
+total memory forecasted: 5.247 MB
+peak memory forecasted: 1.913 MB
+
+circle_packing/initial_program.py:
+total memory forecasted: 244.511 MB
+peak memory forecasted: 26.231 MB
+
+eval.py:
+total memory forecasted: 20.487 MB
+peak memory forecasted: 9.935 MB
+
+data_api.py:
+total memory forecasted: 5.758 MB
+peak memory forecasted: 1.261 MB
+
+cli.py:
+total memory forecasted: 5.308 MB
+peak memory forecasted: 3.056 MB",??
+whisper,https://arxiv.org/pdf/2307.08234v2,,https://github.com/openai/whisper,Python,20k LOC,Active,2,82.2 k stars/ 9.9k forks,README in repo,7,"It is a general-purpose speech recognition model.
+It is compapitble with Python 3.8-3.11.
+It may need rust installed in case tiktoken does not provide a pre-built wheel for the target platform.",Yes,Yes,Yes,No,No,Yes,Yes,Yes,python -m whisper.transcribe (Primary); whisper (console script); whisper/transcribe.py,tests/,"whisper/transcribe.py
+whisper/
+tests/
+README.md
+pyproject.toml","README sections “Setup”, “Command-line usage”, “Python usage” indicate CLI and module runner
+Repo tree shows whisper/ package and transcribe.py ","PYTHONPATH=. python -m whisper.transcribe --help (source: README → Command-line usage)
+PYTHONPATH=. python -c ""import whisper; print(hasattr(whisper, 'load_model'))"" (source: README → Python usage)
+PYTHONPATH=. python -m whisper.transcribe audio.wav --model base (source: README → Command-line usage)",CPU or GPU (GPU recommended; VRAM needs vary by model),None,User-provided audio files; model weights auto-download on first use,,Yes,"total memory forecasted: 10240.0 MB
+peak memory forecasted: 12288.0 MB",??
+generals-bots,https://arxiv.org/abs/2507.06825,https://arxiv.org/pdf/2507.06825,https://github.com/strakam/generals-bots,Python,3.5–4K LOC,Active,3,55 stars / 6 forks,README + Wiki. Install/use shown; examples linked.,7,"Python-based reinforcement learning environment for the game Generals.io.
+Includes multiple agent baselines, replay GUI, and both Gymnasium and PettingZoo wrappers.
+Designed for research and experimentation with multi-agent game strategies.
+Easily extendable with custom agents and compatible with standard RL toolkits.", No,No,No,No,No,No,Yes,Yes,examples/complete_example.py (Primary),tests/,"examples/complete_example.py
+examples/
+generals/
+tests/
+README.md ","README mentions “complete example” demo script
+Repository contains tests/ folder (pytest suite)
+Examples folder includes complete_example.py ","PYTHONPATH=. python examples/complete_example.py (source: README “complete example”)
+pytest -q (source: tests/ folder)",CPU (GPU not required),None (online autopilot requires generals.io account/lobby if used),None (built-in map generator),"Headless runs: disable/avoid GUI render (render_mode=""human"" requires display). Online play needs generals.io credentials.",Yes,"examples/complete_example.py:
+total_memory_forecasted: 312.445 MB
+peak_memory_forecasted: 108.120 MB
+
+generals/core/game.py:
+total_memory_forecasted: 195.633 MB
+peak_memory_forecasted: 74.805 MB","examples/complete_example.py:
+percent_cpu: 52.34
+percent_gpu: 0.00
+
+generals/core/game.py:
+percent_cpu: 46.21
+percent_gpu: 0.00"
+gigaam,https://arxiv.org/abs/2506.01192,https://arxiv.org/pdf/2506.01192,https://github.com/salute-developers/gigaam,Python,1.5–2K LOC,Active,1,237 stars / 33 forks,README in repo,6,"Transformer-based Acoustic Model for Speech and Emotion Recognition. Uses Hydra configs, VAD, emotion conditioning. HuggingFace model only.", No,No,Yes,No,No,No,No,Yes,gigaam (library import) (Primary); inference_example.ipynb,,"gigaam/
+inference_example.ipynb
+README.md ","README usage sections show load_model(...).transcribe(...)
+Repo tree exposes gigaam/ package and notebook","PYTHONPATH=. python -c ""import gigaam; print(hasattr(gigaam, 'load_model'))"" (source: README usage)
+PYTHONPATH=. python -c ""import gigaam; m=gigaam.load_model('rnnt'); print(str(m.transcribe('path/to/audio.wav'))[:80])"" (source: README usage)
+PYTHONPATH=. python -c ""import gigaam; m=gigaam.load_model('emo'); print(m.get_probs('path/to/audio.wav'))"" (source: README usage)
+export HF_TOKEN=""your_hf_token"" (source: README long-form)
+PYTHONPATH=. python -c ""import os,gigaam; os.environ['HF_TOKEN']=os.environ.get('HF_TOKEN',''); m=gigaam.load_model('ctc'); print(list(m.transcribe_longform('long_example.wav'))[:1])"" (source: README long-form)",GPU recommended (CPU works but slower),None; HF token required only for long-form VAD (pyannote models),User-provided audio files (no fixed dataset),Not compatible with NumPy 2.x. Requires manual config. No CLI or unified inference script.,Yes,"gigaam_run.py:
+total_memory_forecasted: 171.708 MB","gigaam_run.py:
+percent_cpu: 15.88
+percent_gpu: 0.00"
+formatron,https://arxiv.org/abs/2506.01151,https://arxiv.org/pdf/2506.01151,https://github.com/Dan-wanna-M/formatron/tree/master,Python,5K–10K LOC,Active,1,217 stars / 6 forks,README only; no docs,11,"Supports multiple LLM backends (ExLlamaV2, vLLM, Transformers) with structured output control via JSON schema.",Yes,Yes,Yes,Yes,No,Yes,Yes,Yes,formatron (library import) (Primary); examples/,tests/,"README.md
+src/formatron/
+examples/
+tests/
+pyproject.toml","README “Examples” section shows runnable snippets (Transformers/ExLlamaV2/vLLM)
+Repo tree exposes src/formatron/, examples/, tests/, and pyproject.toml","PYTHONPATH=src python -c ""import formatron; print('formatron imported')"" (source: src/formatron/)
+PYTHONPATH=src pytest -q (source: tests/)
+PYTHONPATH=src python - <<'PY'\nfrom formatron.formatter import FormatterBuilder\nf=FormatterBuilder(); f.append_line('Hello, World!')\nprint('demo ok')\nPY (source: README → “Examples” pattern)",GPU recommended (CPU-only possible via Transformers but slower),None (some HF models referenced in README may require access on HuggingFace),None,"- Requires ExLlamaV2 and CUDA, which are not available on macOS without GPU.
+- Transformers benchmark tries to load private HF model (Meta-Llama-3-8B-Instruct-32k) — 401 Unauthorized.
+- lmformatenforcer package is not available on PyPI.",No,180 MB (startup peak),
+cmbagent,https://arxiv.org/abs/2507.07257,https://arxiv.org/pdf/2507.07257,https://github.com/CMBAgents/cmbagent,Python,	3.5–4K LOC,Active,1,132 stars / 17 forks,README + usage instructions,19,"LLM-based agent framework for simulating cosmological model analysis. Uses crewAI and ConstructorAdapter to run agents solving tasks like computing H0 parameter. Includes LangChain, LangGraph, and other modern libraries.", No,No,Yes,Yes,Yes,No,Yes,No,cmbagent (console entry) (Primary); backend/run.py; cmbagent.one_shot (library),tests/,"cmbagent/
+backend/run.py
+cmbagent-ui/
+start-cmbagent.sh
+tests/
+pyproject.toml
+README.md ","README “Installation/Run” shows CLI (cmbagent run), library one-liner, and backend/UI startup
+pyproject [project.scripts] defines package/entry points
+Repo tree contains backend/, cmbagent/, tests/, start-cmbagent.sh ","PYTHONPATH=. python -c ""import cmbagent; print('cmbagent import ok')"" (source: README → “Run” import)
+PYTHONPATH=. python -c ""import cmbagent; task='Draw two random numbers and give me their sum'; print(cmbagent.one_shot(task, agent='engineer', engineer_model='gpt-4o-mini'))"" (source: README “Run”; requires OPENAI_API_KEY)
+PYTHONPATH=. python backend/run.py (source: README Manual Setup)
+PYTHONPATH=. pytest -q (source: tests/ present)",CPU (GPU optional depending on provider/model),OPENAI_API_KEY required; optional ANTHROPIC_API_KEY; optional GOOGLE_APPLICATION_CREDENTIALS (Vertex AI),None (agents operate on prompts/RAG content; optional external repo cmbagent_data for RAG),"- Requires OpenAI API key and ACCRa config to run.
+- ConstructorAdapter is loaded via private repo and git+https.
+- Only works in Python ≥3.12 and needs ~15 packages.",Yes,"accra_lc_pipeline.py:
+total_memory_forecasted: ~240 MB","accra_lc_pipeline.py:
+percent_cpu: ~34.20
+percent_gpu: 0.00"
+nanoGPT,https://arxiv.org/pdf/2507.07101,https://arxiv.org/pdf/2507.07101,https://github.com/karpathy/nanoGPT,Python,3.6K LOC,Active,3,43.3 k stars / 7.2K forks,README,17,Lightweight educational GPT training from scratch, No,No,No,No,Yes,Yes,No,Yes,train.py (Primary); sample.py; data/shakespeare/prepare.py,,"train.py
+sample.py
+config/train_shakespeare_char.py
+data/shakespeare/prepare.py
+README.md ","README lists train.py, sample.py, and data-prep scripts; repo tree shows config/ and data/*/prepare.py; no tests folder","PYTHONPATH=. python data/shakespeare/prepare.py (source: README → Shakespeare data prep)
+PYTHONPATH=. python train.py config/train_shakespeare_char.py --device=cpu --compile=False --eval_iters=20 --log_interval=10 --block_size=64 --batch_size=8 --n_layer=2 --n_head=2 --n_embd=128 --max_iters=100 (source: README + config/train_shakespeare_char.py; tiny CPU smoke test)
+PYTHONPATH=. python train.py config/train_shakespeare_char.py --device=cuda (source: README + config/train_shakespeare_char.py; practical GPU training)
+PYTHONPATH=. python sample.py --out_dir=out-shakespeare-char --device=cpu (source: README + sample.py; requires trained checkpoint)",GPU required for practical training; CPU works only for tiny smoke tests,None,Downloads Tiny Shakespeare via prepare.py; user-provided text also supported,No standard entry point; GPU training required; not executable via ACCRa,No,,
+OpenDPD,https://arxiv.org/abs/2507.06849,https://arxiv.org/pdf/2507.06849,https://github.com/lab-emi/OpenDPD,Python,4.3K,Active,2,81 stars / 18 forks,README,8,Deep Parametric Decoder for reconstructing speech/audio from features., No,No,No,No,Yes,No,No,Yes,main.py (Primary); train_all_pa.sh; train_all_dpd.sh; OpenDPDv2.sh; quant_mp_dpd.sh ,,"main.py
+train_all_pa.sh
+train_all_dpd.sh
+OpenDPDv2.sh
+quant_mp_dpd.sh
+README.md ","README marks main.py as main entry point and lists end-to-end commands
+Repository root exposes the bash scripts alongside main.py ","python main.py --dataset_name DPA_200MHz --step train_pa --accelerator cpu (source: README)
+python main.py --dataset_name DPA_200MHz --step train_dpd --accelerator cpu (source: README)
+python main.py --dataset_name DPA_200MHz --step run_dpd --accelerator cpu (source: README)
+bash train_all_pa.sh (source: README)
+bash train_all_dpd.sh (source: README)
+bash OpenDPDv2.sh (source: README)
+bash quant_mp_dpd.sh (source: README)",CPU OK; GPU optional via --accelerator cuda (Apple MPS via --accelerator mps),None,"Bundled PA datasets (e.g., DPA_200MHz, APA_200MHz)",Ensure matching PyTorch/CUDA (CUDA 12.6 for GPU per README). Training can be time-consuming.,Yes,"main.py:
+total_memory_forecasted: 100.809 MB
+peak_memory_forecasted: 88.777 MB","main.py:
+percent_cpu: 20.32
+percent_gpu: 0.00"
+agibotworld,https://arxiv.org/abs/2507.06219,https://arxiv.org/pdf/2507.06219,https://github.com/OpenDriveLab/AgiBot-World,Python,~1K LOC ,Active,1,2.2 k stars / 145 forks,README in repo,11,Multi-agent embodied learning in simulated 3D environments using HuggingFace LeRobot and OpenDriveLab tools; integrates vision-language models with action planning for robotic tasks., No,No,Yes,No,Yes,Yes,No,No,scripts/visualize_dataset.py (Primary); go1/shell/train.sh; evaluate/libero/convert_libero_data_to_lerobot.py; evaluate/deploy.py; evaluate/openloop_eval.py,,"scripts/visualize_dataset.py
+go1/shell/train.sh
+evaluate/libero/convert_libero_data_to_lerobot.py
+evaluate/deploy.py
+evaluate/openloop_eval.py
+README.md ","README “Getting started” shows visualize, conversion, and training commands
+Repo tree exposes scripts/visualize_dataset.py, go1/shell/train.sh, evaluate/* tools","python scripts/visualize_dataset.py --task-id 390 --dataset-path /path/to/lerobot/format/dataset (source: README “Visualize Datasets”)
+python evaluate/libero/convert_libero_data_to_lerobot.py --data_dir /path/to/your/libero/data (source: README “Prepare Data”)
+RUNNAME=<YOUR_RUNNAME> bash go1/shell/train.sh go1/configs/go1_sft_libero.py (source: README “Start Fine-tuning”)
+python evaluate/deploy.py --model_path /path/to/checkpoint --data_stats_path /path/to/dataset_stats.json --port 8080 (source: README “Remote Inference”)",GPU strongly recommended (inference ~7 GB VRAM; fine-tuning full ~70 GB; action-expert-only ~24 GB); CUDA 12.4 tested,None,Requires AgiBot-World datasets (Alpha/Beta) and/or LIBERO converted to LeRobot format; optional downloads via HuggingFace/OpenDataLab,Requires specific versions of LeRobot and TorchVision; several f-string syntax errors and missing dependencies must be fixed manually to run the pipeline.,Yes,"agibot_run.py:
+total_memory_forecasted: 116.232 MB
+peak_memory_forecasted: 42.819 MB","agibot_run.py:
+percent_cpu: 17.61
+percent_gpu: 0.00"
+graphrag-toolkit,https://arxiv.org/abs/2507.04127,https://arxiv.org/pdf/2507.04127,https://github.com/awslabs/graphrag-toolkit,Python,~6K LOC,Active,1,249 stars / 40 forks,README in repo,12,"Supports multi-modal RAG pipelines with graph-based chunking and retrieval. Includes tools for evaluation and benchmark integration (e.g., RAGAS), OpenAI/LLM support, and compatibility with LangChain/Streamlit.", No,No,Yes,Yes,Yes,No,No,No,graphrag/run_graph_rag_pipeline.py (Primary),,"graphrag/run_graph_rag_pipeline.py
+graphrag/
+README.md ",README shows graph RAG pipeline and run instructions,"OPENAI_API_KEY=your_key PYTHONPATH=. python graphrag/run_graph_rag_pipeline.py --help (source: README → “Run pipeline”)
+OPENAI_API_KEY=your_key PYTHONPATH=. python graphrag/run_graph_rag_pipeline.py (source: README → “Run pipeline”)",CPU (GPU optional depending on chosen model backends),OPENAI_API_KEY (and other provider keys if used),User-provided documents/datasets (optional benchmarks via integrations),"No setup.py or pyproject.toml, making standard installation via pip install -e . fail. Requires manual setup. Some scripts rely on cloud API keys (e.g., OpenAI) and may fail silently if not configured properly.
+",Yes,"graphrag/run_graph_rag_pipeline.py:
+total_memory_forecasted: 394.491 MB
+peak_memory_forecasted: 102.333 MB","graphrag/run_graph_rag_pipeline.py:
+percent_cpu: 23.74
+percent_gpu: 0.00"
+pdfmathtranslate,https://arxiv.org/abs/2507.03009,https://arxiv.org/pdf/2507.03009,https://github.com/byaidu/pdfmathtranslate,Python,1.7K LOC ,Active,1,26.1 k stars / 2.3K forks,README in repo,22,Provides an end-to-end pipeline for extracting mathematical expressions from PDFs and converting them into LaTeX using GPT-based OCR and formula segmentation. Supports visual parsing and batch processing., No,No,Yes,Yes,Yes,No,No,No,main.py (Primary),,"main.py
+README.m","README describes running the tool and flags
+Repo tree exposes top-level main.py as runnable entry point","OPENAI_API_KEY=sk-... PYTHONPATH=. python main.py --help (source: README → usage)
+OPENAI_API_KEY=sk-... PYTHONPATH=. python main.py --input path/to/file.pdf --output out_dir (source: README → usage)",CPU (GPU not required),OPENAI_API_KEY (for GPT-based OCR),User-provided PDFs,"Requires multiple heavy dependencies (e.g., pdfminer, pdfplumber); some modules may break in isolated environments without full setup.",Yes,"main.py:
+total_memory_forecasted: 179.203 MB,
+peak_memory_forecasted: 51.994 MB","main.py:
+percent_cpu: 21.58
+percent_gpu: 0.00"
+Flash-VStream,https://arxiv.org/abs/2506.23825,https://arxiv.org/pdf/2506.23825,https://github.com/IVGSZ/Flash-VStream,Python,3.9K LOC,Active,1,217 stars / 15 forks,README present,13,"Streamlined framework for evaluating multimodal LLMs on video-based tasks. Supports frame extraction, table parsing, and pipeline-based model interaction.", No,No,Yes,No,Yes,Yes,No,Yes,Flash-VStream-LLaVA/realtime_cli.sh (Primary); Flash-VStream-Qwen/realtime_cli.sh,,"Flash-VStream-LLaVA/
+Flash-VStream-LLaVA/realtime_cli.sh
+Flash-VStream-Qwen/
+Flash-VStream-Qwen/realtime_cli.sh
+README.md ","Repo README lists subprojects and how to run
+Subproject (LLaVA) folder contains realtime_cli.sh
+Subproject (Qwen) folder contains realtime_cli.sh  ","bash -n Flash-VStream-LLaVA/realtime_cli.sh (source: Flash-VStream-LLaVA/realtime_cli.sh)
+bash Flash-VStream-LLaVA/realtime_cli.sh (source: subproject README)
+bash -n Flash-VStream-Qwen/realtime_cli.sh (source: Flash-VStream-Qwen/realtime_cli.sh)
+bash Flash-VStream-Qwen/realtime_cli.sh (source: subproject README)",GPU recommended/required for real-time performance; CPU likely too slow,None,User-provided videos (optional benchmark datasets),Some users report empty/noisy outputs with 7B checkpoint; evaluation discrepancies tracked in Issues.,Yes,"main.py:
+total_memory_forecasted: 201.113 MB
+peak_memory_forecasted: 66.821 MB","main.py:
+percent_cpu: 26.94
+percent_gpu: 0.00
+"
+mteb,https://arxiv.org/abs/2506.21182,https://arxiv.org/pdf/2506.21182,https://github.com/embeddings-benchmark/mteb,Python,~6K LOC,Active,1,2.7 k stars / 451 forks,README in repo,14,Benchmarking suite for multilingual text embedding evaluation across 100+ tasks and 112 languages. Includes standardized interface and CLI tools., No,No,Yes,No,Yes,Yes,Yes,Yes,mteb (Primary); mteb/cli.py,tests/,"mteb/
+mteb/cli.py
+tests/
+pyproject.toml
+README.md ","README “Using the CLI” and “Python API” sections show commands and usage
+pyproject [project.scripts] defines console entry","PYTHONPATH=. python -c ""import mteb; print(hasattr(mteb, 'MTEB'))"" (source: README → Python API)
+PYTHONPATH=. python -m mteb.cli available_tasks (source: README → Using the CLI)
+PYTHONPATH=. python -m mteb.cli run -m sentence-transformers/all-MiniLM-L6-v2 -t Banking77Classification --verbosity 3 (source: README → Using the CLI)",CPU (GPU optional depending on chosen model),None (HF token only if using gated models),Yes — tasks auto-download datasets (can be multiple GB),"Heavy dependencies (datasets, transformers); many tasks auto-download GBs of data; risk of system overload.",No,,
+ClearerVoice-Studio,https://arxiv.org/abs/2506.19398,https://arxiv.org/pdf/2506.19398,https://github.com/modelscope/ClearerVoice-Studio,Python,~26K LOC,Active,1,3.1 k stars / 249 forks,README in repo,17,Studio for speech enhancement and denoising using neural vocoders and diffusion. Includes Gradio demo and multiple enhancement pipelines., No,No,Yes,No,Yes,Yes,No,Yes,clearvoice/demo_Numpy2Numpy.py (Primary); clearvoice (library import),,"clearvoice/
+clearvoice/demo_Numpy2Numpy.py
+app.py
+enhancer/lcfm/wn.py
+denoiser/unet.py
+README.md ","README lists ClearVoice usage and example demo script
+ClearVoice subfolder and example script paths confirm import and usage","PYTHONPATH=. python -c ""from clearvoice import ClearVoice; m=ClearVoice(task='speech_enhancement', model_names=['FRCRN_SE_16K']); x=m(input_path='samples/input.wav', online_write=False); m.write(x, output_path='samples/output_FRCRN_SE_16K.wav')"" (source: README → ClearVoice usage)
+PYTHONPATH=. python clearvoice/demo_Numpy2Numpy.py (source: example demo script)",CPU or GPU (GPU recommended for heavy models),None,User-provided audio/video files (optional sample assets),Fails on NumPy 2.2.x — requires downgrading to NumPy < 2. See traceback with torch and internal NumPy error.,Yes,"app.py:
+total_memory_forecasted: 100.414 MB
+peak_memory_forecasted: 27.865 MB
+
+enhancer/lcfm/wn.py:
+total: 393.988 MB
+peak: 55.320 MB
+
+denoiser/unet.py:
+total: 808.029 MB
+peak: 169.307 MB","app.py:
+percent_cpu: 21.72
+percent_gpu: 0.00
+
+enhancer/lcfm/wn.py:
+cpu: 25.64
+gpu: 0.00
+
+denoiser/unet.py:
+cpu: 22.43
+gpu: 0.00"
+reasoning360,https://arxiv.org/abs/2506.14965,https://arxiv.org/pdf/2506.14965,https://github.com/LLM360/Reasoning360,Python,1.2K LOC,Active,1,84 stars / 9 forks,README,22,"Benchmark suite evaluating LLM reasoning across multiple categories and datasets. Includes OpenAI, Mistral, and HuggingFace configs.", No,No,Yes,No,Yes,Yes,Yes,Yes,examples/eval_reasoning360.py (Primary); scripts/train/example_multinode_rl_qwen2.5_32b_base_fsdp.sh,tests/,"examples/eval_reasoning360.py
+scripts/train/example_multinode_rl_qwen2.5_32b_base_fsdp.sh
+tests/
+README.md ","README “Evaluation” section references examples/eval_reasoning360.py
+README “RL Training” section references scripts/train/example_multinode_rl_qwen2.5_32b_base_fsdp.sh
+Repo tree shows examples/, scripts/, and tests/ folders","PYTHONPATH=. python examples/eval_reasoning360.py --help (source: README → “Evaluation”)
+sbatch scripts/train/example_multinode_rl_qwen2.5_32b_base_fsdp.sh (source: README → “RL Training”)
+PYTHONPATH=. pytest -q (source: tests/ present)",GPU strongly recommended (README shows CUDA 12.4 in install steps); CPU feasible only for small/local models,"Optional provider keys (e.g., OPENAI_API_KEY, MISTRAL_API_KEY); HuggingFace token if using gated models",Evaluation datasets auto-download; RL training recommends LLM360/guru-RL-92k from Hugging Face,ImportError: cannot import name 'is_mistral_model' from 'llms.utils'; likely due to refactor or missing file. Requires manual config setup.,Yes,"eval_reasoning360.py:
+total: 99.083 MB
+peak: 66.274 MB","eval_reasoning360.py:
+cpu: 27.68
+gpu: 0.00"
+FlexRAG,https://arxiv.org/abs/2506.12494,https://arxiv.org/pdf/2506.12494,https://github.com/ictnlp/FlexRAG,Python,12.8K LOC,Active,2,204 stars / 19 forks,README + API,18,"Modular Retrieval-Augmented Generation (RAG) framework. Supports flexible retriever/generator combinations, lightweight inference, configurable benchmarks, and document corpora.", No,No,Yes,Yes,Yes,Yes,Yes,No,python -m flexrag.entrypoints.run_interactive (Primary); python -m flexrag.entrypoints.eval_assistant; python -m flexrag.entrypoints.prepare_retriever; python -m flexrag.entrypoints.add_index; python -m flexrag.entrypoints.cache; python -m flexrag.entrypoints.serve_retriever,tests/,"src/flexrag/entrypoints/run_interactive.py
+src/flexrag/entrypoints/eval_assistant.py
+src/flexrag/entrypoints/prepare_retriever.py
+src/flexrag/entrypoints/add_index.py
+src/flexrag/entrypoints/cache.py
+src/flexrag/entrypoints/serve_retriever.py
+src/flexrag/
+tests/
+README.md
+pyproject.toml","Docs “Entrypoints / Quickstart” describe run_interactive/eval_assistant and config — https://flexrag.readthedocs.io/en/stable/
+Repo README/news references new run_retriever and points to docs; repo tree shows src/flexrag/ and tests/
+Hugging Face org lists prebuilt retrievers used by examples — https://huggingface.co/FlexRAG ","PYTHONPATH=src OPENAI_API_KEY=sk-... python -m flexrag.entrypoints.run_interactive assistant_type=modular modular_config.retriever_type='FlexRAG/enwiki_2021_atlas' modular_config.response_type=original modular_config.generator_type=openai modular_config.openai_config.model_name='gpt-4o-mini' modular_config.openai_config.api_key=$OPENAI_API_KEY modular_config.do_sample=False (source: Docs “Quickstart / Entrypoints”)
+PYTHONPATH=src OPENAI_API_KEY=sk-... python -m flexrag.entrypoints.eval_assistant name=nq split=test assistant_type=modular modular_config.retriever_type='FlexRAG/enwiki_2021_atlas' modular_config.response_type=short modular_config.generator_type=openai modular_config.openai_config.model_name='gpt-4o-mini' modular_config.openai_config.api_key=$OPENAI_API_KEY modular_config.do_sample=False eval_config.metrics_type=[retrieval_success_rate,generation_f1,generation_em] log_interval=100 (source: Docs “Evaluate Assistant”)
+PYTHONPATH=src python -m flexrag.entrypoints.prepare_retriever input_dir=/path/to/docs output_dir=/path/to/index kind=dense (source: Docs “Prepare Retriever”)
+PYTHONPATH=src python -m flexrag.entrypoints.add_index index_dir=/path/to/index (source: Docs “Add Index”)",CPU OK (retrieval/indexing); GPU recommended for local HF/vLLM generators; online generators (OpenAI) don’t use local GPU,OPENAI_API_KEY (typical); others optional depending on chosen components,"Uses prebuilt HF retrievers (e.g., FlexRAG/enwiki_2021_atlas) or user-prepared corpora via prepare_retriever/add_index","- Heavy download of pretrained retrievers/generators if not configured.
+- Requires setting FLEXRAG_CONFIG in .env.
+- Some scripts use HF models without fallback if offline.",Yes,"retriever_main.py:
+total_memory_forecasted: 139.008 MB
+peak_memory_forecasted: 57.241 MB","retriever_main.py:
+percent_cpu: 22.34
+percent_gpu: 0.00"
+FlagEvalMM,https://arxiv.org/abs/2506.09081,https://arxiv.org/pdf/2506.09081,https://github.com/flageval-baai/FlagEvalMM,Python,~4.6K LOC,Active,1,78 stars / 17 forks,README + examples,34,"Framework for evaluating multi-modal LLMs on vision-language tasks. Supports CLIP, MME, CMMU, SEED-Bench, etc.", No,No,Yes,No,Yes,Yes,No,Yes,"Framework for evaluating multi-modal LLMs on vision-language tasks; supports CLIP, MME, CMMU, SEED-Bench and others; runnable demo via main retriever script",,"run_retriever.py
+examples/
+README.md ","README mentions run_retriever.py and example scripts
+Repo tree shows run_retriever.py and examples/ ","PYTHONPATH=. python run_retriever.py --help (source: README/examples)
+PYTHONPATH=. python run_retriever.py --model <MODEL_NAME> --dataset <DATASET_NAME> (source: README/examples)",CPU or GPU (GPU recommended for VLM backends),"Optional provider keys if using cloud models (e.g., OpenAI/Mistral); Hugging Face token if using gated checkpoints","Requires download of benchmark datasets (e.g., MME, CMMU, SEED-Bench)",,Yes,"run_retriever.py
+total_memory_forecasted: 400.229 MB
+peak_memory_forecasted: 143.576 MB","run_retriever.py
+percent_cpu: 28.49
+percent_gpu: 0.00"
+SeerAttention,https://arxiv.org/abs/2506.08889,https://arxiv.org/pdf/2506.08889,https://github.com/microsoft/SeerAttention,Python,20.9K LOC,Active,1,141 stars / 13 forks,README,11,"Visual attention analysis toolkit for interpreting transformer-based vision models. Built by Microsoft. Includes demos, evaluation, and visualization.", No,No,Yes,No,Yes,Yes,No,Yes,distillation_prefill.py (Primary); distillation_decode.py ,,"distillation_prefill.py
+distillation_decode.py
+eval/
+seer_attn/
+README.md
+pyproject.toml","README (Quick Start, usage mentions distillation/inference adapters)
+Repo files show distillation_prefill.py and distillation_decode.py ","PYTHONPATH=. python -c ""from seer_attn import SeerAttnLlamaForCausalLM; import transformers, torch; print('seer_attn import OK')"" (source: README Quick Start)
+PYTHONPATH=. python distillation_prefill.py --help (source: distillation_prefill.py)
+PYTHONPATH=. python distillation_decode.py --help (source: distillation_decode.py)",GPU recommended/required for practical runs (examples target CUDA with bfloat16); CPU is impractical,"Hugging Face token may be required for gated base models (e.g., Meta Llama, DeepSeek)",None fixed; evaluation scripts may download benchmark data as configured,,Yes,"main.py:
+total_memory_forecasted: 215.978 MB
+peak_memory_forecasted: 58.123 MB","main.py:
+percent_cpu: 28.64
+percent_gpu: 0.00"
+lightllm,https://arxiv.org/abs/2506.03887,https://arxiv.org/pdf/2506.03887,https://github.com/ModelTC/lightllm,Python,	55.2K LOC,Active,1,3.4 k stars / 271 forks,README + scripts,11,Lightweight inference library for large language models using FlashAttention2 and Triton.,Yes,Yes,Yes,No,Yes,Yes,Yes,Yes,python -m lightllm.server.api_server (Primary),test/,"lightllm/server/api_server.py
+lightllm/
+test/
+README.md ","README “Quick Start” shows python -m lightllm.server.api_server …
+Repo tree exposes lightllm/server/api_server.py and test/","PYTHONPATH=. python -m lightllm.server.api_server --model_dir /path/to/Qwen3-8B (source: README “Quick Start”)
+curl http://127.0.0.1:8000/generate
+ -H ""Content-Type: application/json"" -d '{""inputs"":""What is AI?"",""parameters"":{""max_new_tokens"":17}}' (source: README “Quick Start” endpoint)
+PYTHONPATH=. pytest -q test (source: tests/ present)","GPU required (Linux; NVIDIA CUDA, compute capability ≥ 7.0)",None,None (requires local HF weights in --model_dir),Service may fail to start with low Docker shared memory; ensure correct Triton version for your GPU; installation guide targets Linux/Py3.9.,Yes,"lightllm_test_infer.py:
+total_memory_forecasted: 203.644 MB
+peak_memory_forecasted: 51.847 MB","lightllm_test_infer.py:
+percent_cpu: 22.81
+percent_gpu: 0.00"
+ShapeLLM-Omni,https://arxiv.org/abs/2506.01853,https://arxiv.org/pdf/2506.01853,https://github.com/JAMESYJL/ShapeLLM-Omni/,Python,15K LOC,Active,1,463 stars / 25 forks,README + examples,19,"Framework for 3D reconstruction, generation and shape understanding using LLM. Includes ShapeEval, OpenScene, point and mesh format support.", No,No,Yes,No,Yes,Yes,Yes,Yes,app.py (Primary); examples/ (demo scripts),test_3dvqvae.py ,"app.py
+examples/
+configs/
+dataset_toolkits/
+extensions/vox2seq/
+trellis/
+requirements.txt
+templates.txt
+test_3dvqvae.py
+README.md ","README “Installation/Inference” shows app.py and example workflows
+Repository tree exposes app.py plus examples/, configs/, dataset_toolkits/, test_3dvqvae.py ","PYTHONPATH=. python -c ""import importlib.util; print('ok' if importlib.util.spec_from_file_location('app','app.py') else 'missing')"" (source: README → app.py present)
+PYTHONPATH=. python app.py (source: README → Inference)
+PYTHONPATH=. pytest -q test_3dvqvae.py (source: tests file present)",GPU recommended (CPU possible but slow),None (HF token only if using gated models),None (operates on prompts/images; downloads weights on first run),,Yes,"main.py:
+total_memory_forecasted: 282.114 MB
+peak_memory_forecasted: 91.038 MB","main.py:
+percent_cpu: 33.12
+percent_gpu: 0.00"
+GSCodec_Studio,https://arxiv.org/abs/2506.01822,https://arxiv.org/pdf/2506.01822,https://github.com/JasonLSC/GSCodec_Studio,Python,35.6K LOC,Active,1,88 stars / 7 forks,README present,16,Neural audio codec framework for generative speech compression with transformer models., No,No,Yes,No,Yes,Yes,No,Yes,main.py (Primary),,"main.py
+README.md
+configs/
+models/
+scripts/","README indicates main.py as runnable entry and usage
+Repository root includes main.py and config/model folders","PYTHONPATH=. python main.py --help (source: main.py)
+PYTHONPATH=. python -c ""import importlib.util; print('ok' if importlib.util.spec_from_file_location('main','main.py') else 'missing')"" (source: repo layout)",GPU recommended (CPU possible but slower),None,User-provided audio inputs (no fixed dataset bundled),,Yes,"main.py:
+total_memory_forecasted: 211.942 MB
+peak_memory_forecasted: 92.117 MB","main.py:
+percent_cpu: 26.21
+percent_gpu: 0.00"
+CleanS2S,https://arxiv.org/abs/2506.01268,https://arxiv.org/pdf/2506.01268,https://github.com/opendilab/CleanS2S,Python,	3.5K LOC,Active,1,462 stars / 42 forks,README + Training Guide,18,Framework for clean and efficient SFT for seq2seq models. Introduces high-quality data filtering and LLM-guided revision., No,No,Yes,No,Yes,Yes,No,Yes,cleans2s_eval.py (Primary),,"cleans2s_eval.py
+README.md
+training_guide.md
+configs/","README/Training Guide describe evaluation entry and config-based runs
+Repository tree shows cleans2s_eval.py and configs/","PYTHONPATH=. python cleans2s_eval.py --help (source: README → Evaluation)
+PYTHONPATH=. python -c ""import importlib.util; print('ok' if importlib.util.spec_from_file_location('eval','cleans2s_eval.py') else 'missing')"" (source: repo layout)",GPU recommended (CPU feasible only for tiny smoke tests),None (HF token only if using gated models),User-provided or HF datasets (may auto-download),,Yes,"cleans2s_eval.py:
+total_memory_forecasted: 315.232 MB
+peak_memory_forecasted: 141.127 MB","cleans2s_eval.py:
+percent_cpu: 64.41
+percent_gpu: 0.00"
+OpenPAR,https://arxiv.org/abs/2505.23313,https://arxiv.org/pdf/2505.23313,https://github.com/Event-AHU/OpenPAR,Python,28.5K LOC,Active,2,142 stars / 19 forks,Basic README (no API docs),20,"Open-source implementation of 3D pose alignment with detailed modular components for training, evaluation, and visualization; integrates synthetic datasets; supports both transformer and CNN backbones.", No,No,Yes,No,Yes,Yes,No,Yes,main.py (Primary),,"main.py
+README.md
+configs/
+data/
+scripts/",README minimal usage; repository layout exposes main.py and configs/data/scripts,"PYTHONPATH=. python main.py --help (source: repo layout)
+PYTHONPATH=. python -c ""import importlib.util; print('ok' if importlib.util.spec_from_file_location('main','main.py') else 'missing')"" (source: repo layout)",GPU recommended (CPU possible but slow),None,Synthetic datasets integrated; user datasets may be required for training/eval,Lacks detailed documentation and CLI usage examples; hardcoded paths in scripts; no pretrained models provided; CUDA dependencies not clearly versioned.,Yes,"main.py:
+total_memory_forecasted: 570.914 MB
+peak_memory_forecasted: 225.647 MB","main.py:
+percent_cpu: 52.74
+percent_gpu: 0.00"
+360-LLaMA-Factory,https://arxiv.org/abs/2505.22296,https://arxiv.org/pdf/2505.22296,https://github.com/Qihoo360/360-LLaMA-Factory,Python,19K LOC,Active,2,540 stars / 40 forks,README in repo,20,"Full-stack LLM training/inference suite; integrates LoRA, QLoRA, DPO, PPO, RAG, chat API & WebUI", No,No,Yes,No,Yes,Yes,No,Yes,train_mem.py (Primary); web UI/app scripts (if present),,"train_mem.py
+README.md
+configs/
+scripts/
+src/",README references train_mem.py for training usage; repository tree shows configs/ and scripts/,"PYTHONPATH=. python train_mem.py --help (source: README → training usage)
+PYTHONPATH=. python -c ""import importlib.util; print('ok' if importlib.util.spec_from_file_location('train','train_mem.py') else 'missing')"" (source: repo layout)",GPU recommended (CPU feasible only for tiny smoke tests),None,User-provided datasets or Hugging Face datasets (as configured),,Yes,"train_mem.py:
+total_memory_forecasted: 456.202 MB
+peak_memory_forecasted: 150.784 MB","train_mem.py:
+percent_cpu: 62.73
+percent_gpu: 0.00"
+rStar,https://arxiv.org/abs/2505.21297,https://arxiv.org/pdf/2505.21297,https://github.com/microsoft/rStar,Python,4K LOC,Active,1,609 stars / 53 forks,README present,2,Lightweight tool for generating synthetic data using regex-based patterns; supports colorful terminal output for better visualization., No,No,Yes,Yes,Yes,Yes,No,Yes,examples/chat_with_tool_call.py (Primary); examples/aime_eval.sh; examples/math500_eval.sh; data_preprocess/aime2024_rstar2_agent_loop.py; data_preprocess/dapo_rstar2_agent_loop.py,,"examples/chat_with_tool_call.py
+examples/aime_eval.sh
+examples/math500_eval.sh
+data_preprocess/aime2024_rstar2_agent_loop.py
+data_preprocess/dapo_rstar2_agent_loop.py
+rstar2_agent/
+code-judge/
+verl/
+install.sh
+pyproject.toml
+README.md ","README “Try rStar2-Agent / Evaluation / RL Training” lists chat_with_tool_call.py and AIME/MATH scripts
+Repo tree shows examples/, data_preprocess/, rstar2_agent/, code-judge/, verl/, install.sh ","PYTHONPATH=. python examples/chat_with_tool_call.py --help (source: README → “Try rStar2-Agent with Tool Calling / Script Options”)
+MODEL_PATH=/path/to/model bash examples/aime_eval.sh (source: README → “Evaluation”)
+PYTHONPATH=. python data_preprocess/aime2024_rstar2_agent_loop.py (source: README → “Data Preparation”)",GPU strongly recommended/required for evaluation & RL (VLLM server + CUDA); CPU feasible only for minimal help/import checks,None (may require Hugging Face token for gated models),AIME24/25 and MATH500 auto-download or preprocessed via data_preprocess scripts; training example uses DAPO-17k,,Yes,"generate.py:
+total_memory_forecasted: 218.054 MB
+peak_memory_forecasted: 102.125 MB","generate.py:
+percent_cpu: 49.16
+percent_gpu: 0.00"
+FutureMotion,https://arxiv.org/abs/2505.20414,https://arxiv.org/pdf/2505.20414,https://github.com/kit-mrt/future-motion,Python,4.4K LOC,Active,1,73 stars / 7 forks,README + pyproject.toml + examples,6,Real-time trajectory prediction for autonomous driving; multiple prediction horizons; uses lightweight model and OpenDRIVE-based scenarios., No,No,No,No,No,No,No,Yes,predictor.py (Primary); examples/,,"predictor.py
+examples/
+pyproject.toml
+README.md","README and repo tree indicate predictor.py and examples/ as runnable components
+pyproject.toml and examples/ referenced by README for usage","PYTHONPATH=. python -c ""import importlib.util; print('ok' if importlib.util.spec_from_file_location('predictor','predictor.py') else 'missing')"" (source: repo layout → predictor.py)
+PYTHONPATH=. python predictor.py --help (source: README mentions examples/ and usage around predictor)
+PYTHONPATH=. python examples/<example_script>.py (source: examples/ folder)",CPU (no GPU required),None,Built-in/OpenDRIVE-based scenarios; user-provided scenarios optional,Limited documentation; no training scripts; real-time evaluation only; small scenario set.,Yes,"predictor.py:
+total_memory_forecasted: 168.42 MB
+peak_memory_forecasted: 61.77 MB","predictor.py:
+percent_cpu: 36.12
+percent_gpu: 0.00"
+OpenGait,https://arxiv.org/abs/2505.18582,https://arxiv.org/pdf/2505.18582,https://github.com/ShiqiYu/OpenGait,Python,9.4K LOC,Active,4,889 stars / 195 forks,README in repo,8,PyTorch-based gait recognition framework; modular backbone; benchmark-ready, No,No,Yes,No,Yes,Yes,No,Yes,opengait/main.py (Primary); train.sh ,test.sh ,"opengait/main.py
+train.sh
+test.sh
+opengait/
+configs/
+datasets/
+README.md ","Repo README describes training/testing scripts and config usage (root README)
+opengait/main.py defines CLI args (--cfgs, --phase); configs/ contains presets (e.g., gaitbase)","PYTHONPATH=. python opengait/main.py --cfgs ./configs/gaitbase/gaitbase_da_grew.yaml --phase train (source: opengait/main.py; configs/gaitbase)
+PYTHONPATH=. python opengait/main.py --cfgs ./configs/gaitbase/gaitbase_da_grew.yaml --phase test (source: opengait/main.py; configs/gaitbase)
+bash train.sh (source: train.sh)",GPU recommended for practical training; CPU only for tiny smoke runs,None,"Requires prepared gait datasets (CASIA-B, OU-MVLP, GREW, Gait3D); not auto-downloaded",,Yes,"train_open.py:
+total_memory_forecasted: 727 MB
+peak_memory_forecasted: 241 MB","train_open.py:
+percent_cpu: 21.4
+percent_gpu: 0.00"
+qiskit-machine-learning,https://arxiv.org/abs/2505.17756,https://arxiv.org/pdf/2505.17756,https://github.com/qiskit-community/qiskit-machine-learning,Python,17K LOC,Active,4,839 stars / 373 forks,README + notebooks + examples,35,"Quantum-compatible ML toolkit; integrates with Qiskit for quantum kernel methods, variational classifiers, and quantum neural networks.", No,No,Yes,No,No,No,Yes,Yes,qiskit_machine_learning (library import) (Primary); docs/tutorials/; examples/,test/,"qiskit_machine_learning/
+qiskit_machine_learning/algorithms/classifiers/vqc.py
+examples/
+docs/tutorials/
+pyproject.toml
+README.md","README and examples/notebooks show library usage
+Repo tree exposes qiskit_machine_learning/, test/, docs/tutorials/
+pyproject defines package and extras for ML components","PYTHONPATH=. python -c ""import qiskit_machine_learning as qml; print(getattr(qml, 'version', 'import_ok'))"" (source: README → library usage)
+PYTHONPATH=. pytest -q (source: tests present)",CPU (no GPU required),None,None (tutorials often use scikit-learn toy datasets),,Yes,"vqc.py:
+total_memory_forecasted: 87.3 MB
+peak_memory_forecasted: 38.4 MB","vqc.py:
+percent_cpu: 24.7
+percent_gpu: 0.00"
+eval-audio-repr,https://arxiv.org/abs/2505.15307,https://arxiv.org/pdf/2505.15307,https://github.com/nttcslab/eval-audio-repr/,Python,3.5K LOC,Active,3,63 stars / 3 forks,README with basic usage,6,Focused benchmark for self-supervised audio representations, No,No,Yes,No,Yes,Yes,No,Yes,inference.py (Primary),,"inference.py
+examples/
+README.md","README describes basic usage and points to inference script
+Repository layout exposes inference.py and examples/ for running benchmarks","PYTHONPATH=. python inference.py --help (source: README → basic usage)
+PYTHONPATH=. python -c ""import importlib.util; print('ok' if importlib.util.spec_from_file_location('inference','inference.py') else 'missing')"" (source: repo layout)",GPU required (CPU likely too slow),None,Requires benchmark datasets prepared in expected folder structure; paths must be set before running,Needs GPU; limited config support; fails without specific dataset setup,Yes,"inference.py:
+total_memory_forecasted: 164.8 MB
+peak_memory_forecasted: 48.2 MB","inference.py:
+percent_cpu: 19.7
+percent_gpu: 0.00"
+RD-Agent,https://arxiv.org/abs/2505.15155,https://arxiv.org/pdf/2505.15155,https://github.com/microsoft/RD-Agent,Python,33.5K LOC,Active,1,6.9 k stars / 687 forks,README,14,RL framework for dialogue agents with retrieval-augmented memory & dynamic policy updates., No,No,Yes,Yes,Yes,Yes,No,No,rd_agent_main.py (Primary),,"rd_agent_main.py
+README.md","README indicates rd_agent_main.py and basic usage
+Repository layout shows rd_agent_main.py at repo root","python rd_agent_main.py --help (source: README → “Usage”)
+PYTHONPATH=. python -c ""import importlib.util as iu; print('ok' if iu.spec_from_file_location('rd_main','rd_agent_main.py') else 'missing')"" (source: repo root → rd_agent_main.py)",GPU recommended (CPU feasible only for minimal smoke tests),OPENAI_API_KEY and/or other provider keys depending on chosen backend,User-provided or referenced benchmarks as configured; may auto-download depending on scripts,,Yes,"rd_agent_main.py:
+total_memory_forecasted: 325.781 MB
+peak_memory_forecasted: 128.942 MB","rd_agent_main.py:
+percent_cpu: 36.45
+percent_gpu: 0.00"
+reasoning-boundary,https://arxiv.org/abs/2505.13307,https://arxiv.org/pdf/2505.13307,https://github.com/LightChen233/reasoning-boundary,Python,91K LOC,Active,1,67 stars / 3 forks,README,17,"Supports both text-based and multimodal datasets; includes evaluation scripts for various reasoning settings (CoT, Tool-Usage, PoT, Complex-CoT, LtM, MARP); provides reproduction of paper results and custom result evaluation; includes visualization scripts for reasoning boundaries.", No,No,Yes,Yes,Yes,Yes,No,Yes,evaluate.py (Primary),,"evaluate.py
+configs/
+data/
+scripts/
+visualization/
+README.md","README describes evaluation, reproduction, and visualization; evaluate.py visible in repo tree
+Configs and dataset folders used by evaluation scripts; presence of visualization/ indicated in README","PYTHONPATH=. python evaluate.py --help (source: file evaluate.py)
+PYTHONPATH=. python evaluate.py --config configs/example.yaml (source: README → “Evaluation”)",CPU or GPU (GPU recommended for large models),"Optional provider keys (e.g., OpenAI/Mistral) or Hugging Face token if using gated models",Uses evaluation datasets from configs; may auto-download or require local paths depending on task,,Yes,"evaluate.py:
+total_memory_forecasted: 412.6 MB
+peak_memory_forecasted: 156.8 MB","evaluate.py:
+percent_cpu: 28.9
+percent_gpu: 0.00"
+LLM4Decompile,https://arxiv.org/abs/2505.12668,https://arxiv.org/pdf/2505.12668,https://github.com/albertan017/LLM4Decompile,Python,91K LOC,Active,1,5.9 K stars / 400 forks,README,21,Multi-size LLMs (6.7B–22B) for binary-to-source decompilation; GCC/objdump integration; benchmark datasets; configurable optimization levels; reproducible pipeline., No,Yes,Yes,No,Yes,Yes,No,No,ghidra/demo.py (Primary); evaluation/ (evaluation scripts); train/ (training scripts),,"ghidra/demo.py
+evaluation/
+train/
+decompile-bench/
+requirements.txt
+requirements-docker.txt
+Dockerfile
+README.md","README “Quick Start” shows preprocessing steps and running ghidra/demo.py inside Docker; also lists GCC/objdump requirements and HF model usage
+Repository tree exposes evaluation/, train/, ghidra/, decompile-bench/, and requirements files","PYTHONPATH=. python ghidra/demo.py (source: README → “Docker setup” → cd ghidra; python demo.py)
+PYTHONPATH=. python - <<'PY'\nimport subprocess, os\nprint('GCC/objdump required; demo uses HF model checkpoints')\nPY (source: README → “Quick Start” notes on GCC/objdump and HF models)",GPU strongly recommended (large HF checkpoints; CPU impractical except for tiny demos),None (Hugging Face token only if using gated checkpoints),Built-in evaluation JSON (decompile-eval); optional large training/eval sets from,Needs GCC/objdump in PATH; large models require GPU; strict dependency versions for reproducibility.,Yes,"main.py:
+total_memory_forecasted: 512.4 MB
+peak_memory_forecasted: 203.6 MB","main.py:
+percent_cpu: 34.2
+percent_gpu: 0.00"
+RecAI,https://arxiv.org/abs/2505.03336,https://arxiv.org/pdf/2505.03336,https://github.com/microsoft/RecAI,Python,29K LOC,Active,2,851 stars / 83 forks,README,34,"Modular recommender system framework by Microsoft; pipelines, datasets, notebooks; integration with HuggingFace PEFT/Transformers; reproducible shell scripts and utilities.", No,No,Yes,No,Yes,Yes,Yes,Yes,main.py (Primary); scripts/; examples/; notebooks/,tests/,"main.py
+scripts/
+examples/
+notebooks/
+tests/
+pyproject.toml
+README.md","README describes pipelines, examples, and scripts
+pyproject.toml and repo tree expose main.py, scripts/, examples/, notebooks/, tests/","PYTHONPATH=. python -c ""import importlib.util; print('ok' if importlib.util.spec_from_file_location('main','main.py') else 'missing')"" (source: repo root layout)
+PYTHONPATH=. python main.py --help (source: README → usage)
+PYTHONPATH=. pytest -q (source: tests/ present)",GPU recommended (CPU feasible for small demos),None (some pipelines may require provider API keys depending on configuration),User-provided datasets or auto-downloaded benchmarks as configured in examples/scripts,Py3.13 build issues with bertopic/accelerate; torch version conflicts; outdated processing package; some tasks require CUDA or LLM API keys.,Yes,"main.py:
+total_memory_forecasted: 412.6 MB
+peak_memory_forecasted: 158.2 MB","main.py:
+percent_cpu: 34.8
+percent_gpu: 0.00"
+SigmaRL,https://arxiv.org/abs/2505.02395,https://arxiv.org/pdf/2505.02395,https://github.com/bassamlab/SigmaRL,Python,16.4K LOC,Active,1,60 stars / 1 forks,README in repo,16,"Multi-agent reinforcement learning framework with VMAS integration; customizable road scenarios (intersections, roundabouts, merges); safety-critical RL via control barrier functions; supports parallelized simulation and training.", No,No,Yes,No,Yes,Yes,No,Yes,train.py (Primary),,"train.py
+README.md ","README mentions training usage and entry script
+Repo tree shows train.py at repository root","PYTHONPATH=. python train.py --help (source: README → “Usage”)
+PYTHONPATH=. python -c ""import importlib.util as iu; print('ok' if iu.spec_from_file_location('train','train.py') else 'missing')"" (source: file path)",GPU recommended (CPU feasible for small demos),None,None (uses simulated scenarios; user-configured maps),,Yes,"train.py:
+total_memory_forecasted: 528.4 MB
+peak_memory_forecasted: 212.7 MB","train.py:
+percent_cpu: 38.2
+percent_gpu: 0.00"
+CAMELTrack,https://arxiv.org/abs/2505.01257,https://arxiv.org/pdf/2505.01257,https://github.com/TrackingLaboratory/CAMELTrack,Python,3.5K LOC,Active,1,85 stars / 4 forks,README in repo,14,"Transformer-based visual tracking framework with CAMEL-based memory module; supports multi-object tracking benchmarks; modular design for dataset loading, model training, and evaluation.", No,No,Yes,No,Yes,Yes,No,Yes,train.py (Primary),,"train.py
+configs/
+datasets/
+models/
+README.md","README in repo describes training/evaluation workflow
+Repository tree exposes train.py and typical folders (configs/, datasets/, models/)","PYTHONPATH=. python train.py --help (source: README → usage)
+PYTHONPATH=. python train.py --config configs/<your_config>.yaml (source: README → training/eval pattern)",GPU recommended (CPU feasible only for tiny smoke tests),None,Requires prepared tracking datasets per config (benchmark datasets not auto-downloaded),,Yes,"train.py:
+total_memory_forecasted: 618.5 MB
+peak_memory_forecasted: 245.1 MB","train.py:
+percent_cpu: 37.6
+percent_gpu: 0.00"
+RAGEN,https://arxiv.org/abs/2504.20073,https://arxiv.org/pdf/2504.20073,https://github.com/RAGEN-AI/RAGEN,Python,5K LOC,Active,1,2.2 K stars / 174 forks,README + YAML configs (Hydra/OMC stack),29,"Hydra-based configs; multi-backend LLM stack (Transformers/PEFT, Anthropic, planned vLLM); logging via W&B; optional Ray tooling. Based on sets of packages that were installed/checked at startup.", No,Yes,Yes,Yes,Yes,Yes,No,No,train.py (Primary); scripts/train_all.sh; scripts/setup_ragen.sh,,"train.py
+config/
+scripts/train_all.sh
+scripts/setup_ragen.sh
+requirements.txt
+pyproject.toml
+README.md ","Docs “Installation” (Python ≥3.12, CUDA ≥12.1; setup_ragen.sh/manual steps) — https://ragen-doc.readthedocs.io/en/latest/quickstart/installation/
+Docs “Quick Start Guide” (train.py default run, overrides, train_all.sh) — https://ragen-doc.readthedocs.io/en/latest/quickstart/quick_start/ ","python train.py (source: Docs “Quick Start Guide” → Training Script)
+python train.py trainer.experiment_name=sokoban-ppo-rolloutfilter0.25 actor_rollout_ref.rollout.rollout_filter_ratio=0.25 (source: Docs “Quick Start Guide” → example override)
+bash scripts/train_all.sh (source: Docs “Quick Start Guide” → standard experiments)",GPU required/recommended (docs suggest ≥24 GB VRAM; CUDA ≥12.1); CPU only for trivial smoke tests,W&B optional (wandb login); Hugging Face token only if using gated models,Auto-downloads environment assets via setup script; no large fixed dataset,Py 3.13 incompatibility of several packages; torch is not selected; flash-attn build failure; peft version conflict; tensordict/torchdata conflicts; vllm requires unavailable torch==2.6.0; some gym-packages/hydra-core were not pulled up automatically.,Yes,"main.py:
+total_memory_forecasted: 468.3 MB
+peak_memory_forecasted: 182.1 MB","main.py:
+percent_cpu: 35.6
+percent_gpu: 0.00"
+vision6D,https://arxiv.org/abs/2504.15329,https://arxiv.org/pdf/2504.15329,https://github.com/InteractiveGL/vision6D,Python,1630K LOC,Active,2,82 stars  / 9 forks,README,11,"Supports 6D object pose estimation with deep learning and OpenGL-based visualization; includes dataset loaders, evaluation scripts, and rendering tools.",Yes,No,Yes,No,Yes,Yes,No,No,main.py (Primary),,"main.py
+README.md","Repo README describes features and usage; repo tree shows main.py
+General structure indicates top-level main.py as runner","PYTHONPATH=. python -c ""import importlib.util as iu; print('ok' if iu.spec_from_file_location('main','main.py') else 'missing')"" (source: repo layout)
+PYTHONPATH=. python main.py --help (source: README → usage pattern with main script)",GPU recommended (CPU feasible for limited functions); requires working OpenGL stack,None,Requires prepared 6D pose datasets per configuration; not auto-downloaded,may fail in headless environments without additional OpenGL setup.,Yes,"main.py:
+total_memory_forecasted: 512.6 MB
+peak_memory_forecasted: 196.4 MB","main.py:
+percent_cpu: 37.2
+percent_gpu: 0.00"
+UFO,https://arxiv.org/abs/2504.14603,https://arxiv.org/pdf/2504.14603,https://github.com/microsoft/UFO/,Python,13.5K LOC,Active,2,7.5K stars  / 931 forks,README,10,Implements a unified object detection framework supporting multiple vision tasks; modular configuration with YAML; pretrained model loading and evaluation pipelines., No,No,Yes,No,Yes,Yes,No,Yes,main.py (Primary),,"main.py
+configs/
+README.md","README describes unified detection, configs and usage
+Repo tree shows main.py and configs/ folder","PYTHONPATH=. python main.py --help (source: README)
+PYTHONPATH=. python main.py --config configs/<your_config>.yaml --mode eval --weights /path/to/checkpoint (source: README)",GPU recommended; CPU feasible only for tiny smoke tests,None,"User-provided detection datasets per config (e.g., COCO-style); weights may auto-download if configured",,Yes,"main.py:
+total_memory_forecasted: 428.3 MB
+peak_memory_forecasted: 159.7 MB","main.py:
+percent_cpu: 34.8
+percent_gpu: 0.00"
+VoxCity,https://arxiv.org/abs/2504.13934,https://arxiv.org/pdf/2504.13934,https://github.com/kunifujiwara/VoxCity,Python,11K LOC,Active,1,55 stars  / 4 forks,README + ReadTheDocs,36,"Seamless framework for integrating open geospatial data and generating grid/voxel 3D city models; auto-downloads buildings/land cover/canopy/DEM; simple simulations (solar, view indices); exports ENVI-met (INX/EDB), MagicaVoxel (VOX), and OBJ.", No,No,No,No,Yes,No,No,Yes,quick_test_rome.py (Primary),,"quick_test_rome.py
+voxcity/
+docs/
+README.md","README and ReadTheDocs describe quick-start and auto-download workflow
+Repository tree shows quick_test_rome.py as runnable demo",PYTHONPATH=. python quick_test_rome.py (source: README → quick test),CPU (no GPU required),None,Auto-downloads open geospatial datasets (buildings/land cover/canopy/DEM); may be multi-GB,,Yes,"quick_test_rome.py:
+total_memory_forecasted: 520.0 MB
+peak_memory_forecasted: 240.0 MB","quick_test_rome.py:
+percent_cpu: 33.0
+percent_gpu: 0.00"
+LearningHumanoidWalking,https://arxiv.org/abs/2504.13619,https://arxiv.org/pdf/2504.13619,https://github.com/rohanpsingh/LearningHumanoidWalking,Python,9.1K LOC,Active,3,794 stars  / 91 forks,README + CLI usage 14 PPO trainer,14,"PPO humanoid locomotion with SymmetricEnv mirroring, Ray-based parallel rollouts, MJCF auto-builder for Unitree H1, YAML configs, optional LSTM policy, built-in eval/video logging, supports JVRC & H1.", No,No,Yes,No,Yes,No,No,No,run_experiment.py (Primary); scripts/debug_stepper.py,,"run_experiment.py
+envs/
+tasks/
+rl/
+models/
+scripts/
+utils/
+pyproject.toml
+README.md","README “Usage” shows train/eval commands and environment names (h1, jvrc_walk, jvrc_step)
+Repo tree exposes run_experiment.py and scripts/debug_stepper.py","python run_experiment.py train --logdir exp_runs/demo --num_procs 4 --env jvrc_walk (source: README → “To train”)
+python run_experiment.py eval --logdir path/to/actor_checkpoint.pt (source: README → “To play”)
+PYTHONPATH=.:$PYTHONPATH python scripts/debug_stepper.py --path exp_runs/demo (source: README → debug_stepper for jvrc_step)",CPU (GPU optional for faster PPO),None,None (simulated environments; MJCF assets under models/),"SSH submodules (clone fails without keys), Menagerie assets required for H1, MJCF name mismatch can raise KeyError: 'pelvis', not pip-installable, headless needs OSMesa/MuJoCo GL env vars, CLI expects train|eval first, some hardcoded /tmp paths, sparse docs/no pretrained.",Yes,"run_experiment.py:
+total_memory_forecasted: 512.0 MB
+peak_memory_forecasted: 220.0 MB","run_experiment.py:
+percent_cpu: 72.00
+percent_gpu: 0.00"
+RuleKit,https://arxiv.org/abs/2504.20650,https://arxiv.org/pdf/2504.20650,https://github.com/adaa-polsl/RuleKit,Python,1.2K LOC,Active,6,167 stars  / 10 forks,README + Wiki 4 Interpretable rule-learning toolkit,8,"Interpretable rule-based models (readable IF–THEN rules); scikit-learn-style API (fit/predict); pandas-friendly; multiple rule quality measures (C2, Correlation, etc.) for induction/pruning/voting; lightweight, no GPU required", No,No,No,No,No,No,No,Yes,rulekit_quicktest.py (Primary); rulekit (library import),,"rulekit_quicktest.py
+rulekit/
+README.md","README + Wiki describe quick start and Python API
+Project Wiki with API/usage details","PYTHONPATH=. python rulekit_quicktest.py (source: file path)
+PYTHONPATH=. python -c ""import rulekit; print('rulekit imported')"" (source: package path)",CPU (no GPU required),None,None (examples use small in-memory/toy datasets),,Yes,"rulekit_quicktest.py:
+total_memory_forecasted: 120.807 MB
+peak_memory_forecasted: 120.807 MB","rulekit_quicktest.py:
+percent_cpu: 4.06
+percent_gpu: 0.00"
+MQT QECC,https://arxiv.org/abs/2504.10591,https://arxiv.org/pdf/2504.10591,https://github.com/munich-quantum-toolkit/qecc,Python,7.5k LOC,Active,3,161 stars  / 23 forks,README + CLI,14,"CLI cc-decoder with two backends (tensor-network tn and MaxSAT), supports hexagon and square-octagon lattices, runs Monte Carlo trials via --nr_sims, writes JSON results to --results_dir, and lets you plug in an external MaxSAT solver with --solver.", No,No,Yes,Yes,Yes,No,Yes,Yes,python -m mqt.qecc.cc_decoder.cli (Primary); mqt.qecc.cc-decoder,test/python/,"src/mqt/qecc/cc_decoder/cli.py
+src/mqt/qecc/cc_decoder/decoder.py
+src/mqt/qecc/codes/
+test/python/
+pyproject.toml","Docs “LightsOut decoder for quantum codes” page lists mqt.qecc.cc-decoder and flags (--decoder maxsat|tn, --solver PATH). https://mqt.readthedocs.io/projects/qecc/en/stable/LightsOutDecoder.html
+API docs show mqt.qecc.cc_decoder.cli and decoder modules.","PYTHONPATH=. python -m mqt.qecc.cc_decoder.cli --help (source: Docs “LightsOut decoder” → CLI help)
+PYTHONPATH=. python -m mqt.qecc.cc_decoder.cli 21 0.01 --nr_sims 1000 --results_dir results (source: Docs “LightsOut decoder” → CLI usage)
+PYTHONPATH=. python -m mqt.qecc.cc_decoder.cli 11 0.02 --decoder tn --nr_sims 200 (source: Docs “LightsOut decoder” → --decoder option)
+PYTHONPATH=. python -m mqt.qecc.cc_decoder.cli 7 0.05 --solver /path/to/rc2 (source: Docs “LightsOut decoder” → --solver option)",CPU (no GPU required),None,None (simulated experiments; writes results to directory),"Requires a real MaxSAT binary (e.g., RC2/Open-WBO); z3 cannot read WCNF; RC2 wrapper without a proper shebang can trigger “Exec format error”; v1.9.0 passes WCNF text as a filename, so you must write it to a temporary .wcnf file or pipe it into the solver as a workaround.",Yes,"mqt.qecc.cc-decoder:
+total_memory_forecasted: 210.0 MB
+peak_memory_forecasted: 140.0 MB","mqt.qecc.cc-decoder:
+percent_cpu: 88.00
+percent_gpu: 0.00"
+octgpt,https://arxiv.org/abs/2504.09975,https://arxiv.org/pdf/2504.09975,https://github.com/octree-nn/octgpt,Python,6.5K LOC,Active,1,177 stars  / 2 forks,README,8,Octree-based 3D tokenization with PyTorch pipeline; SDF sampling utility (tools/sample_sdf.py) for geometry-aware inputs; OBJ/PLY mesh ingestion via trimesh/plyfile; simple CLI runner (main_octgpt.py); YAML-driven configs; CPU-only path works; lightweight local preprocessing., No,No,Yes,No,Yes,Yes,No,Yes,main_octgpt.py (Primary); tools/sample_sdf.py,,"main_octgpt.py
+tools/sample_sdf.py
+configs/
+octgpt/
+README.md ","README describes simple CLI runner and preprocessing utilities
+Repo tree exposes main_octgpt.py, tools/sample_sdf.py, configs/ for YAML-driven runs","PYTHONPATH=. python main_octgpt.py --help (source: README)
+PYTHONPATH=. python tools/sample_sdf.py --input path/to/mesh.obj --output out_dir (source: file path)
+PYTHONPATH=. python main_octgpt.py --config configs/<your_config>.yaml (source: config-driven runner)",CPU supported; GPU optional/recommended for speed,None,User-provided meshes (OBJ/PLY); optional SDF generation output directory,"Needs a virtualenv on macOS due to PEP 668; Torch 2.2 on macOS prefers NumPy<2 to avoid ABI errors; SDF script may produce no files if meshes aren’t watertight or output dirs/flags don’t match expectations; CPU runs are slow; no pretrained checkpoints and minimal docs, so setup is a bit trial-and-error.",Yes,"main_octgpt.py:
+total_memory_forecasted: 340.8 MB
+peak_memory_forecasted: 162.3 MB","main_octgpt.py:
+percent_cpu: 66.45
+percent_gpu: 0.00"
+TensorNEAT,https://arxiv.org/abs/2504.08339,https://arxiv.org/pdf/2504.08339,https://github.com/EMI-Group/tensorneat,Python,3.1K LOC,Active,1,247 stars  / 35 forks,Basic README + examples,15,"AX-native NEAT pipeline with vectorized/JIT evolution, deterministic PRNG seeding, modular genome/selection operators, built-in toy benchmarks (e.g., XOR3d), optional Brax/Gymnax env support, CPU-friendly with accelerator support when available.", No,No,Yes,No,Yes,No,No,Yes,examples/run_tensorneat_xor.py (Primary); examples/ (other demos),,"examples/run_tensorneat_xor.py
+examples/
+tensorneat/
+pyproject.toml
+README.md ","README “Examples / Quick start” mentions running example scripts
+Repo tree exposes examples/ and tensorneat/ with XOR demo","PYTHONPATH=. JAX_PLATFORM_NAME=cpu python examples/run_tensorneat_xor.py (source: README → examples; file path)
+PYTHONPATH=. JAX_PLATFORM_NAME=cpu python examples/run_tensorneat_xor.py --seed 0 --pop_size 64 --generations 50 (source: examples/run_tensorneat_xor.py)
+PYTHONPATH=. python -c ""import tensorneat; print('import_ok')"" (source: package import check)",CPU (GPU/TPU optional via JAX; accelerators used if available),None,None (toy tasks bundled; optional Brax/Gymnax environments if used),Heavy dependency stack (JAX/jaxlib/flax/optax/jaxopt/orbax/tensorstore) causing pip backtracking and “resolution-too-deep”; strict JAX–jaxlib–NumPy version alignment required; optional MuJoCo/MJX adds platform-specific headaches on macOS; noticeable first-run XLA compile latency; GPU/TPU setup not covered by quickstart.,Yes,"run_tensorneat_xor.py:
+total_memory_forecasted: 111.1 MB
+peak_memory_forecasted: 111.1 MB","run_tensorneat_xor.py:
+percent_cpu: 68.4
+percent_gpu: 0.00"
+llm4ranking,https://arxiv.org/abs/2504.07439,https://arxiv.org/pdf/2504.07439,https://github.com/liuqi6777/llm4ranking,Python,2K LOC,Active,1,64 stars  / 1 forks,README,13,Instructional ranger; easy to replace HF encoders; plug-and-play with BM25/embeddings; CPU inference out of the box; fixed seed, No,No,Yes,No,Yes,Yes,No,Yes,main.py (Primary),,"main.py
+configs/
+requirements.txt
+README.md ","README “Usage” shows running main.py with configs and encoder options
+Repo tree exposes main.py and configs/ for YAML-driven runs","PYTHONPATH=. python main.py --help (source: README → usage)
+PYTHONPATH=. python main.py --config configs/example.yaml --retriever bm25 --encoder sentence-transformers/all-MiniLM-L6-v2 (source: README → usage pattern)",CPU (GPU optional),None (Hugging Face token only if using gated models),First run may download model weights/datasets from Hugging Face; otherwise user-provided corpora,"First run pulls weights from HF (requires internet/space); on macOS MPS is not active by default; TOKENIZERS_PARALLELISM warnings are possible; PyArrow/Datasets are too heavy for ""thin"" environments",Yes,"main.py:
+total_memory_forecasted: 363.9 MB
+peak_memory_forecasted: 363.9 MB","main.py:
+percent_cpu: 24.05
+percent_gpu: 0.00"
+"building-assistance-game
+",https://arxiv.org/abs/2504.07091,https://arxiv.org/pdf/2504.07091,https://github.com/cassidylaidlaw/minecraft-building-assistance-game,Python,2K LOC,Active,3,150 stars  / 9 forks,README,12,"CraftAssist-based game environment, ""builder assistant"" mode (language prompts → actions), RLlib integration (multi-process experience collection), ready-made scenarios/building schemes and success metrics", No,No,Yes,Yes,Yes,No,Yes,Yes,mbag/scripts/evaluate.py (Primary); mbag/scripts/train.py; mbag/scripts/evaluate_human_modeling.py,"tests/ (pytest; markers: uses_malmo, slow, uses_rllib, uses_cuda)","mbag/scripts/evaluate.py
+mbag/scripts/train.py
+mbag/scripts/evaluate_human_modeling.py
+mbag/
+data/
+tests/
+pyproject.toml
+README.md ","README “Setup / Running assistants in Minecraft” shows python -m mbag.scripts.evaluate and malmo launch
+README “Running experiments” lists python -m mbag.scripts.train / evaluate_human_modeling","pytest -m ""not uses_malmo and not slow"" (source: README → “Linting, testing, and type checking”)
+PYTHONPATH=. python -m mbag.scripts.train with bc_human data_split=human_alone (source: README → “Running experiments”)
+PYTHONPATH=. python -m mbag.scripts.evaluate with human_alone assistant_checkpoint=data/assistancezero_assistant/checkpoint_002000 num_simulations=1 (source: README → “Running assistants in Minecraft”)",CPU (GPU optional; GPU lets you increase num_simulations for MCTS),None,Optional craftassist.zip house dataset (auto-download via README commands) for training/eval; pure tests can run without Malmo/dataset,"On macOS, headless rendering/window permissions issues may occur, Large data loads, long Ray initialization, Gym/RLlib version sensitivity",Yes,"un_mbag.py:
+total_memory_forecasted: 318.7 MB
+peak_memory_forecasted: 318.7 MB","run_mbag.py:
+percent_cpu: 33.20
+percent_gpu: 0.00"
+Agent-S,https://arxiv.org/abs/2504.00906,https://arxiv.org/pdf/2504.00906,https://github.com/simular-ai/Agent-S,Python,9.5K LOC,Active,1,6.2K stars  / 661 forks,README + examples,19,"GUI automation via Agent-Computer Interface (ACI); cross-platform (macOS/Windows/Linux); Python SDK/CLI; plugs into many LLM providers; supports grounding models (e.g., UI-TARS); strong OSWorld-Verified results; easy pip setup and presets.", No,No,Yes,Yes,Yes,Yes,No,Yes,main.py (Primary); examples/,,"main.py
+examples/
+README.md
+pyproject.toml","README describes SDK/CLI usage and example runs
+Repo tree exposes main.py and examples/ as runnable entry points","PYTHONPATH=. python main.py --help (source: README → CLI usage pattern)
+PYTHONPATH=. python -c ""import importlib.util as iu; print('ok' if iu.spec_from_file_location('main','main.py') else 'missing')"" (source: repo layout)",CPU (no GPU required),"Provider API keys as configured (e.g., OPENAI_API_KEY, ANTHROPIC_API_KEY) depending on chosen preset/model",None,,Yes,"main.py:
+total_memory_forecasted: 430.0 MB
+peak_memory_forecasted: 360.0 MB","main.py:
+percent_cpu: 33.5
+percent_gpu: 0.00"
+CrackSQL,https://arxiv.org/abs/2504.00882,https://arxiv.org/pdf/2504.00882,https://github.com/weAIDB/CrackSQL,Python,4.6 K LOC,Active,1,60 stars  / 20 forks,README,13,"Hybrid SQL dialect translation with three modes (Rule-only, LLM-direct, Rule+LLM); rules built on SQLGlot/ANTLR with a function-oriented, local→global strategy for cross-dialect syntax; coverage for many dialects plus hybrid support for major RDBMS (PostgreSQL/MySQL/Oracle); multiple interfaces (Python API, CLI, Web UI) and optional GPT/HF backends.", No,No,Yes,Yes,Yes,No,No,Yes,app.py (Primary); cracksql/cli.py; cracksql (library import),,"app.py
+cracksql/
+README.md
+init_config.yaml
+scripts/","README lists CLI/Web/UI and hybrid modes
+Repo tree exposes app.py at root and cracksql/ package","PYTHONPATH=. python app.py --help (source: README → Web UI)
+PYTHONPATH=. python -m cracksql.cli --help (source: README → CLI)
+PYTHONPATH=. python -c ""import cracksql; print('import_ok')"" (source: README → Python API)",CPU (no GPU required),Optional OPENAI_API_KEY / HUGGINGFACE_API_KEY for LLM modes,None (operates on user SQL strings; optional DB connection for Web/backend flow),Pinned ipython==9.2.0 requires Python ≥3.11 (fails on 3.10); Web/backend flow needs a DB and init_config.yaml for initkb; LLM modes require API keys and embedding resources; for full features use Python 3.11+ or relax the pins.,Yes,"app.py:
+total_memory_forecasted: 258.9 MB
+peak_memory_forecasted: 172.4 MB","app.py:
+percent_cpu: 6.7
+percent_gpu: 0.00"
+xLAM,https://arxiv.org/abs/2503.22673,https://arxiv.org/pdf/2503.22673,https://github.com/SalesforceAIResearch/xLAM,Python,8K LOC,Active,1,537 stars  / 43 forks,README + ActionStudio_README.md,22,"Unified agent-trajectory schema with a generic dataloader; ActionStudio training recipes (full fine-tune, LoRA, distributed with Ray/DeepSpeed); xLAM models compatible with Hugging Face (Transformers/vLLM); tool-call parser plugin for function-calling and multi-turn agent demos; ready-to-use scripts and sample configs.", No,Yes,Yes,Yes,Yes,Yes,No,No,main.py (Primary); scripts/* (training/launchers),,"main.py
+ActionStudio_README.md
+requirements.sh
+scripts/
+configs/
+examples/","README + ActionStudio_README.md describe main.py and ActionStudio recipes (training/LoRA/Ray/DeepSpeed)
+Repo tree exposes scripts/, configs/, requirements.sh, and example configs","PYTHONPATH=. python main.py --help (source: README → usage)
+bash scripts/train_lora.sh (source: ActionStudio_README.md → training recipes)",GPU recommended (Linux + CUDA); CPU-only limited to imports/profiling,Hugging Face token required if using gated model weights,User-provided/curated agent trajectories via unified schema; examples/configs may reference HF-hosted weights/data,requirements.sh assumes conda; some demos need HF model weights and substantial GPU VRAM; CPU-only runs are limited (imports/profiling). For local runs use Linux + CUDA or relax pins,Yes,"main.py:
+total_memory_forecasted: 312.0 MB
+peak_memory_forecasted: 228.0 MB","main.py:
+percent_cpu: 6.1
+percent_gpu: 0.00"
+TerraTorch,https://arxiv.org/abs/2503.20563,https://arxiv.org/pdf/2503.20563,https://github.com/IBM/terratorch,Python,23K LOC,Active,1,551 stars  / 91 forks,README + docs,21,"A set for fine-tuning geospatial FM: config/CLI pipelines (Hydra + PyTorch Lightning), integrations with TorchGeo/segmentation-models-pytorch/timm, GeoTIFF support via xarray/rioxarray/GeoPandas, ready-made recipes for classification/segmentation, experiment tracking in MLflow.", No,No,Yes,No,Yes,Yes,No,Yes,main.py (Primary),,"main.py
+terratorch/
+configs/
+docs/
+scripts/
+examples/
+pyproject.toml","README (overview, CLI patterns)
+Docs mention Hydra configs and training recipes","PYTHONPATH=. python main.py --help (source: README → CLI patterns)
+PYTHONPATH=. python main.py task=classification data.root=/path/to/geotiffs trainer.max_epochs=1 (source: Docs → Quickstart)
+PYTHONPATH=. python main.py task=segmentation data.root=/path/to/geotiffs model.backbone=resnet34 trainer.max_epochs=1 (source: Docs → Tasks/Configs)",GPU recommended (CPU feasible for small demos),None,User-provided geospatial rasters (GeoTIFF/COGs); some examples may download small open datasets,,Yes,"main.py:
+total_memory_forecasted: 704.9 MB
+peak_memory_forecasted: 704.9 MB","main.py:
+percent_cpu: 14.57
+percent_gpu: 0.00"
+AgML,https://arxiv.org/abs/2503.20068,https://arxiv.org/pdf/2503.20068,https://github.com/Project-AgML/AgML,Python,10.5K LOC,Active,4,233 stars  / 34 forks,README + docs,12,"Unified API for agro-datasets (classification/detection/segmentation); ready-made loaders, markup/metadata and split management; utilities for downloading and normalizing annotations; integration with Albumentations/OpenCV/Scikit-learn; Jupyter widgets (ipywidgets) for fast interactive selection/preview.", No,No,Yes,No,No,No,Yes,Yes,agml (Primary); examples/,tests/ (pytest),"agml/
+examples/
+tests/
+docs/
+pyproject.toml
+README.md ","README Quick Start shows agml.data.AgMLDataLoader and dataset usage
+Docs “Overview / Quick Start / Public Dataset Listing” describe import, loaders, and agml.data.public_data_sources — https://project-agml.github.io/AgML/ ","PYTHONPATH=. python -c ""import agml; print('agml import OK:', hasattr(agml,'data'))"" (source: README → Quick Start import)
+PYTHONPATH=. python -c ""import agml; print('datasets:', len(agml.data.public_data_sources()))"" (source: Docs → Public Dataset Listing)",CPU (GPU optional for training),None,Auto-downloads public agricultural datasets on first use; can be multi-GB depending on selection,,Yes,"main.py:
+total_memory_forecasted: 117.8 MB
+peak_memory_forecasted: 117.8 MB","main.py:
+percent_cpu: 6.04
+percent_gpu: 0.00"
+Halton-MaskGIT,https://arxiv.org/abs/2503.17076,https://arxiv.org/pdf/2503.17076,https://github.com/valeoai/Halton-MaskGIT,Python,3.2K LOC,Active,2,256 stars  / 25 forks,README,28,Drop-in Halton scheduler for MaskGIT; uniform token release (quasi-random) for quality/diversity improvement without overtraining., No,No,Yes,No,Yes,Yes,No,Yes,halton_maskgit_infer.py (Primary); main.py,,"halton_maskgit_infer.py
+main.py
+configs/
+models/
+utils/
+README.md","README describes Halton scheduler integration and example usage
+Repo tree exposes halton_maskgit_infer.py and main.py as runnable scripts","PYTHONPATH=. python halton_maskgit_infer.py --help (source: file path)
+PYTHONPATH=. python halton_maskgit_infer.py --config configs/example.yaml --ckpt_path /path/to/maskgit_checkpoint.pt --input_dir samples/ --output_dir out/ (source: README pattern + file path)
+PYTHONPATH=. python main.py --config configs/train_example.yaml (source: file path)",GPU recommended; CPU works but is very slow for image generation,None,User-provided images and pretrained MaskGIT/VQ models; no fixed dataset auto-download,"Need PyTorch/MaskGIT checkpoints; very slow on CPU (macOS); little automation/CLI, examples may reference external weights/datasets.",Yes,"halton_maskgit_infer.py:
+total_memory_forecasted: 210.0 MB
+peak_memory_forecasted: 155.0 MB","main.py:
+percent_cpu: 16.5
+percent_gpu: 0.00"
+LLaVA-MORE,https://arxiv.org/abs/2503.15621,https://arxiv.org/pdf/2503.15621,https://github.com/aimagelab/LLaVA-MORE,Python,27K LOC,Active,1,148 stars  / 8 forks,README,12,"ready integration with HF (transformers/accelerate/datasets), PyTorch 2.2.2 + torchvision (CPU wheels), support for timm/einops/sentencepiece, utilities for pre-/post-processing (opencv-headless, pandas, pyarrow), you can import and run light tests on CPU.", No,No,Yes,No,Yes,Yes,No,Yes,src/llava/eval/run_llava.py (Primary); scripts/llava-more/release_1/12_finetuning_llama_31_acc_st_1.sh; scripts/llava-more/release_1/11_pretrain_llama_31_acc_st_1.sh; scripts/llava-more/eval/lmms_eval_single_task.sh,,"src/llava/eval/run_llava.py
+src/llava/
+scripts/llava-more/release_1/12_finetuning_llama_31_acc_st_1.sh
+scripts/llava-more/release_1/11_pretrain_llama_31_acc_st_1.sh
+scripts/llava-more/eval/lmms_eval_single_task.sh
+requirements.txt
+README.md","README “Inference/Training/Evaluation” shows run_llava.py and sbatch scripts
+README “Inference” example with HF model path/env vars","PYTHONPATH=. python -u src/llava/eval/run_llava.py --model-path aimagelab/LLaVA_MORE-llama_3_1-8B-finetuning --model-architecture llama_3_1 --conv-mode llama_3_1 (source: README → “Inference”)
+sbatch scripts/llava-more/release_1/12_finetuning_llama_31_acc_st_1.sh (source: README → “Training”)
+sbatch scripts/llava-more/eval/lmms_eval_single_task.sh (source: README → “Evaluation”)",GPU recommended (8-bit loading available for low VRAM); CPU feasible only for light imports/smoke,Optional HF token (HF_TOKEN) if using gated models,None fixed; evaluation may auto-download benchmarks via lmms-eval,,Yes,"main.py:
+total_memory_forecasted: 780.0 MB
+peak_memory_forecasted: 380.0 MB","main.py:
+percent_cpu: 12.0
+percent_gpu: 0.00"
+VenusFactory,https://arxiv.org/abs/2503.15438,https://arxiv.org/pdf/2503.15438,https://github.com/ai4protein/VenusFactory,Python,11K LOC,Active,1,135 stars  / 19 forks,README,27,"Unified platform for protein engineering: fast dataset collection/curation, reproducible benchmarks and plug-and-play fine-tuning/inference of protein LM; there is a CLI and a simple web interface (Gradio); config-driven pipelines.", No,No,Yes,No,Yes,Yes,No,No,"src/webui.py (Primary, Gradio UI); script/train/train_plm_vanilla.sh; script/train/train_plm_ses-adapter.sh; script/train/train_plm_adalora.sh; script/train/train_plm_qlora.sh; script/train/train_plm_lora.sh; script/train/train_plm_dora.sh; script/train/train_plm_ia3.sh; script/eval/eval.sh",,"src/webui.py
+script/train/train_plm_vanilla.sh
+script/train/train_plm_ses-adapter.sh
+script/train/train_plm_adalora.sh
+script/train/train_plm_qlora.sh
+script/train/train_plm_lora.sh
+script/train/train_plm_dora.sh
+script/train/train_plm_ia3.sh
+script/eval/eval.sh
+requirements.txt
+environment.yml
+README.md","README → “Quick Start with Venus Web UI” shows python ./src/webui.py
+README → “Code-line Usage” lists training/eval bash scripts","python ./src/webui.py (source: README → “Quick Start with Venus Web UI”)
+bash ./script/train/train_plm_lora.sh (source: README → “Code-line Usage” → LoRA)
+bash ./script/eval/eval.sh (source: README → “Code-line Usage” → Basic Evaluation)",CPU ok for UI/some tasks; GPU recommended for training/inference of large PLMs,None (W&B optional for logging; HF token only for gated models),User-provided or auto-downloads from Hugging Face (multiple GB possible),"PEP 668 blocks system pip → need venv/pyenv; PyTorch 2.2.x conflicts with NumPy 2.x → pin numpy<2; GPU-only dependencies (bitsandbytes, flash-attn, xformers) are not installed on CPU-Mac; PyG wheels (pyg-lib, torch-scatter/sparse/cluster) are not available for macOS CPU, which disables some features; pins like crewai~=0.117.1 are incompatible with Python 3.13 — use Python 3.11.",Yes,"main.py:
+total_memory_forecasted: 1150.0 MB
+peak_memory_forecasted: 600.0 MB","main.py:
+percent_cpu: 140.0
+percent_gpu: 0.00"
+SVD-LLM,https://arxiv.org/abs/2503.12340,https://arxiv.org/pdf/2503.12340,https://github.com/AIoT-MLSys-Lab/SVD-LLM,Python,5K LOC,Active,1,236 stars  / 27 forks,README with Quick Start,9,Truncation-aware data whitening + SVD; sequential low-rank updates (LoRA); integration with GPTQ-4bit; scripts for PPL/efficiency., No,No,Yes,No,Yes,Yes,No,No,SVDLLM.py (Primary); compress_llama.sh; svdllm_gptq.sh; quant_llama.py; evaluater.py,,"SVDLLM.py
+compress_llama.sh
+svdllm_gptq.sh
+quant_llama.py
+evaluater.py
+component/
+gptq/
+utils/
+requirements.txt
+README.md ","README “Quick Start / Step-by-Step Instructions” list compress_llama.sh and python SVDLLM.py steps
+README shows GPTQ integration via svdllm_gptq.sh and evaluation steps 4–5","bash compress_llama.sh (source: README → “Quick Example”)
+PYTHONPATH=. python SVDLLM.py --step 1 --ratio 0.2 --model HUGGINGFACE_MODEL_REPO --whitening_nsamples 128 --dataset c4 --seed 0 --model_seq_len 2048 --save_path out/whitening (source: README → “Step 1”)
+PYTHONPATH=. python SVDLLM.py --step 4 --model_path out/compressed (source: README → “Evaluation → Perplexity”)
+PYTHONPATH=. python SVDLLM.py --step 5 --model_path out/compressed (source: README → “Evaluation → Efficiency”)
+bash svdllm_gptq.sh (source: README → “SVD-LLM + GPTQ”)",GPU recommended; CPU feasible only for small smoke tests,Hugging Face token only for gated model weights (otherwise none),"Whitening/eval use text corpora (e.g., c4 JSONs placed under utils/ per README); LoRA example auto-downloads yahma/alpaca-cleaned; models fetched from Hugging Face",,Yes,"SVDLLM.py:
+total_memory_forecasted: 610.0 MB
+peak_memory_forecasted: 580.0 MB""","SVDLLM.py:
+percent_cpu: 68.0
+percent_gpu: 0.00"
+DeTikZify,https://arxiv.org/abs/2503.11509,https://arxiv.org/pdf/2503.11509,https://github.com/potamides/DeTikZify,Python,4.9K LOC,Active,2,1.5K stars  / 77 forks,README,13,"There is a lightweight Gradio-WebUI with d&d/URL and preview, pure TikZ export to fig.tex and PDF/PNG assembly if TeX is available, Python API/CLI (DetikzifyPipeline), CPU/GPU operation with HF_HOME caching, PDF autocropping/preview and local/remote image support.", No,No,Yes,No,Yes,Yes,No,No,detikzify/webui.py (Primary; module runner detikzify.webui); examples/*.py,,"detikzify/webui.py
+detikzify/infer.py
+detikzify/model.py
+examples/
+pyproject.toml
+README.md","README “Usage” shows python -m detikzify.webui and DetikzifyPipeline code sample
+Repo tree shows detikzify/ package and examples/ folder","PYTHONPATH=. python -m detikzify.webui --light (source: README → “web UI”)
+PYTHONPATH=. python -c ""from detikzify.model import load; from detikzify.infer import DetikzifyPipeline; pipe=DetikzifyPipeline(*load(model_name_or_path='nllg/detikzify-v2.5-8b', device_map='auto')); fig=pipe.sample(image='https://w.wiki/A7Cc
+'); print('tikz_len', len(str(fig.tikz)) if hasattr(fig,'tikz') else 'ok')"" (source: README → “DeTikZify Example”)",CPU or GPU (GPU preferred for speed); TeX/ghostscript/poppler required only for PDF/PNG compilation,None,None (operates on user images/URLs; caches models via Hugging Face),"hard pin torch~=2.7.1 (no wheels on macOS x86_64), version conflicts (fastapi, gradio, pydantic, transformers), missing dependencies (datasets, pdf2image, pdfCropMargins, PyMuPDF, POT, torchmetrics), ABI conflict with numpy 2.x, 404 for nllg/detikzify-tl-1.1b model, WebUI crashes on imports, issues with pdflatex in PATH and missing fig.tex, slow and CPU-hungry; better run in Docker/Linux and use HF_HOME instead of TRANSFORMERS_CACHE.",Yes,"main.py:
+total_memory_forecasted: 320.0 MB
+peak_memory_forecasted: 260.0 MB","main.py:
+percent_cpu: 52.0
+percent_gpu: 0.00"
+Falcon,https://arxiv.org/abs/2503.11070,https://arxiv.org/pdf/2503.11070,https://github.com/TianHuiLab/Falcon,Python,2K LOC,Active,1,316 stars  / 28 forks,README,20,"single-script inference launch (inference.py, single_gpu_inference_eval.py) for describing satellite images; there is a retrieval module for hints in answers; works with LLM via OpenAI-compatible API (you can substitute OpenAI/Qwen); demo assets; acceleration via flash-attn.", No,No,Yes,Yes,Yes,Yes,No,No,inference.py (Primary); single_gpu_inference_eval.py; multi_node_distributed_train.py,,"inference.py
+single_gpu_inference_eval.py
+multi_node_distributed_train.py
+data.py
+eval/
+image_samples/
+assets/
+requirements.txt
+README.md","README “Quick Start with Falcon” and “Inference on 14 tasks” show inference.py usage
+Repository files list shows inference.py, single_gpu_inference_eval.py, multi_node_distributed_train.py, image_samples/","python inference.py --checkpoint_path <checkpoint_path> --image_path image_samples/IMG_CLS/[IMG_CLS]_003_AID_3525_river_192_ori.png --post_process_type IMG_CLS --prompt ""Classify the image.\nUse one or a few words."" (source: README → “Inference on 14 tasks”)
+python inference.py --checkpoint_path <checkpoint_path> --image_path image_samples/REG_DET_OBB/[REG_DET_OBB]_034_DOTA2.0_77716_P0799_ori.png --post_process_type REG_DET_OBB --prompt ""Detect all harbor in the image.\nUse oriented bounding boxes."" (source: README → “Inference on 14 tasks”)",GPU recommended (CPU feasible for simple runs; slower without CUDA/flash-attn),Hugging Face token may be required for model checkpoints,None (sample images included under image_samples/; no fixed dataset),"no pyproject.toml/setup.py — not installed as a package; requirements are tailored for CUDA/NVIDIA (flash-attn, nvidia-cublas-cu12) and are not installed on macOS CPU; weights/access via Hugging Face token are needed; there is no ready-made path on CPU/Metal; in some places there are inconsistencies in the requirement files (no requirements_demo.txt); confusion with paths to scripts and scant documentation.",Yes,"inference.py:
+total_memory_forecasted: 812.6 MB
+peak_memory_forecasted: 812.6 MB","inference.py:
+percent_cpu: 27.43
+percent_gpu: 0.00"
+PyGDA,https://arxiv.org/abs/2503.10284,https://arxiv.org/pdf/2503.10284,https://github.com/pygda-team/pygda,Python,3.3K LOC,Active,1,236 stars  / 43 forks,README + docstrings,4,Library for Graph Domain Adaptation; includes AirportDataset; models include PairAlign; runs on CPU; uses PyTorch+PyG stack; supports CVXPY optimization via external solvers., No,No,Yes,No,Yes,No,No,No,examples/.py (Primary),,"pygda/
+examples/
+benchmark/
+benchmark/node/run.sh
+benchmark/graph/run_all_.sh
+benchmark/llm/
+data/
+pyproject.toml
+README.md
+docs/","README + repo tree show pygda/, examples/, benchmark/ and usage notes
+Docs “Quick Start” and package reference confirm API usage (A2GNN, datasets, metrics) — https://pygda.readthedocs.io/en/stable/
+Docs “Benchmarks Overview” shows run.sh and dataset prep scripts — https://pygda.readthedocs.io/en/stable/benchmark/Overview/ ","PYTHONPATH=. python -c ""from pygda.models import A2GNN; print('A2GNN OK')"" (source: Docs “Quick Start”)
+cd benchmark/node && ./run.sh (source: Docs “Benchmarks → Running the Benchmark”)",CPU (GPU optional for larger benchmarks),None,User-provided/local datasets; benchmark scripts expect datasets to be present or prepared; no auto-download for many sets,"(1) On macOS x86_64, strict versions were needed: torch 2.1.2 + compatible PyG extension wheels. (2) NumPy 2.x is incompatible with torch 2.1.2 → had to downgrade to numpy 1.26.4. (3) CVXPY is not a default dependency → ModuleNotFoundError: cvxpy (solved by installing cvxpy + solvers). (4) Datasets are not downloaded automatically — AirportDataset requires local files in ./data/airport/raw/ with the required names, otherwise FileNotFoundError.",Yes,"pa.py:
+total_memory_forecasted: 512.7 MB
+peak_memory_forecasted: 224.3 MB","pa.py:
+percent_cpu: 85.12
+percent_gpu: 0.00"
+Open-Sora,https://arxiv.org/abs/2503.09642,https://arxiv.org/pdf/2503.09642,https://github.com/hpcaitech/Open-Sora,Python,15.8K LOC,Active,1,27.1K stars  / 2.7K forks,README + docs,12,End-to-end text-to-video diffusion pipeline (training & inference); Colossal-AI integration for distributed/FP16 training; modular YAML configs with dataset & schedule presets; video I/O helpers (ffmpeg) and sampling scripts., No,No,Yes,No,Yes,Yes,No,No,scripts/diffusion/inference.py (Primary),,"scripts/diffusion/inference.py
+configs/diffusion/inference/
+opensora/
+assets/texts/
+gradio/
+requirements.txt
+README.md","README “Quickstart → Text-to-Video Generation” shows torchrun with scripts/diffusion/inference.py and configs
+Repo tree exposes scripts/, configs/, opensora/, assets/texts/, gradio/, requirements.txt","torchrun --nproc_per_node 1 --standalone scripts/diffusion/inference.py configs/diffusion/inference/t2i2v_256px.py --save-dir samples --prompt ""raining, sea"" (source: README → Quickstart “Text-to-Video Generation”)
+torchrun --nproc_per_node 1 --standalone scripts/diffusion/inference.py configs/diffusion/inference/256px.py --cond_type i2v_head --prompt ""A panda in the forest"" --ref assets/texts/i2v.png (source: README → Image-to-Video Generation)",GPU strongly recommended (multi-GPU supported via torchrun/Colossal-AI); CPU only is impractical beyond smoke tests,Optional Hugging Face token for model downloads; optional OPENAI_API_KEY for prompt-refine/motion-score evaluator,None for inference (uses prompts and pretrained checkpoints); training requires large user-provided datasets,,Yes,"main.py:
+total_memory_forecasted: 410.0 MB
+peak_memory_forecasted: 320.0 MB","main.py:
+percent_cpu: 16.3
+percent_gpu: 0.00"
+RFUAV,https://arxiv.org/abs/2503.09033,https://arxiv.org/pdf/2503.09033,https://github.com/kitoweeknd/RFUAV/,Python,4.4K LOC,Active,1,247 stars  / 36 forks,README,21,RF-IQ → spectrograms (STFT/Mel) with visualization; scripts for UAV detection/classification and metrics evaluation; modular train/infer configs and notebooks; PyTorch baseline + preprocessing/augmentation utilities., No,No,Yes,No,Yes,No,No,Yes,main.py (Primary); scripts/ (train/infer/eval utilities),,"main.py
+scripts/
+configs/
+notebooks/
+README.md ","README describes training/inference scripts and configuration; repo tree shows main.py, scripts/, configs/, notebooks/","PYTHONPATH=. python main.py --help (source: README)
+PYTHONPATH=. python main.py --config configs/example.yaml --mode infer (source: README “inference” pattern)",GPU recommended; CPU-only runs are very slow and some scripts expect CUDA,None,Requires prepared datasets with correct paths in configs; no auto-download,"pin torch==2.4.0 breaks installation on macOS/py310 (no wheel) — downpin/CPU-wheel 2.2.2 or GPU environment is needed; datasets and correct paths are required for real launch; CPU-only is very slow, some scripts expect CUDA; missing system dependencies (audio/spectral libraries) are possible.",Yes,"main.py:
+total_memory_forecasted: 138.6 MB
+peak_memory_forecasted: 115.8 MB","main.py:
+percent_cpu: 5.4
+percent_gpu: 0.00"
+napari-nninteractive,https://arxiv.org/abs/2503.08373,https://arxiv.org/pdf/2503.08373,https://github.com/MIC-DKFZ/napari-nninteractive,Python,3.1K LOC,Active,1,91 stars  / 12 forks,README,21,"napari plugin for interactive segmentation with scribbles/brush and instant feedback; 2D/3D medical images support; nnUNetv2 and napari-toolkit integration; model loading/cache via HuggingFace Hub; NIfTI (napari-nifti) reading, modular plugin architecture.", No,No,Yes,No,No,Yes,Yes,Yes,napari (Primary; plugin widget “nnInteractive” via Plugins menu); napari -w napari-nninteractive (auto-start widget),,"src/napari_nninteractive/
+README.md
+pyproject.toml
+.napari-hub/
+tox.ini
+imgs/","README “Getting Started” lists napari launch options incl. -w napari-nninteractive and demo path
+Repo tree shows src/napari_nninteractive/ package and project files
+napari hub lists the plugin “napari-nninteractive” - https://www.napari-hub.org/plugins/napari-nninteractive ","napari -w napari-nninteractive (source: README → “Getting Started”)
+napari /path/to/volume.nii.gz -w napari-nninteractive (source: README → “Getting Started”)
+napari (then Plugins → nnInteractive) (source: README → “Getting Started”)","GPU recommended (Linux/Windows, Nvidia; ~10 GB VRAM recommended; small objects <6 GB possible); CPU impractical for real-time use",None (models auto-download from Hugging Face; token not required unless using gated models),"User-provided medical images (e.g., NIfTI .nii/.nii.gz); no fixed dataset bundled",,Yes,"main.py:
+total_memory_forecasted: 188.0 MB
+peak_memory_forecasted: 145.0 MB","main.py:
+percent_cpu: 6.7
+percent_gpu: 0.00"
+ImageFolde,https://arxiv.org/abs/2503.08354,https://arxiv.org/pdf/2503.08354,https://github.com/lxa9867/ImageFolder,Python,1.3K LOC,Active,1,280 stars  / 6 forks,README,21,utilities for reorganizing datasets to the torchvision.datasets.ImageFolder format; CLI for creating train/val/test splits and generating class_to_idx; support for copying/moving/symlinks and filtering by extensions; compatibility with DataLoader/torchvision pipelines; simple assistants for checking the structure of a dataset., No,No,Yes,No,No,Yes,Yes,Yes,inference.py (Primary); train.py; trainer.py; sample_imagenet_rar.py,,"inference.py
+train.py
+trainer.py
+configs/
+tokenizer/
+models/
+datasets/
+scripts/
+README.md ","README shows training/inference commands and references pretrained weights
+Project page with method overview — https://lxa9867.github.io/works/imagefolder/index.html
+Paper referenced in README (Robust Latent Matters / ImageFolder family) — https://arxiv.org/abs/2503.08354","torchrun --nproc_per_node=2 inference.py --infer_ckpt /path/to/checkpoint --data_path /path/to/ImageNet --depth 17 --encoder_model vit_base_patch14_dinov2.lvd142m --decoder_model vit_base_patch14_dinov2.lvd142m --product_quant 2 --semantic_guide dinov2 --num_latent_tokens 121 --v_patch_nums 1 1 2 3 3 4 5 6 8 11 --pn 1_1_2_3_3_4_5_6_8_11 --patch_size 11 --sem_half True --cfg 3.25 --top_k 750 --top_p 0.95 (source: README → “Inference code for VAR”)
+torchrun --nproc_per_node=8 train.py --bs 768 --alng 1e-4 --fp16 1 --wpe 0.01 --tblr 8e-5 --data_path /path/to/ImageNet2012/ --encoder_model vit_base_patch14_dinov2.lvd142m --decoder_model vit_base_patch14_dinov2.lvd142m --product_quant 2 --semantic_guide dinov2 --num_latent_tokens 121 --v_patch_nums 1 1 2 3 3 4 5 6 8 11 --pn 1_1_2_3_3_4_5_6_8_11 --patch_size 11 --vae_ckpt /path/to/ckpt.pt --sem_half True (source: README → “Training code for VAR”)",GPU strongly recommended (multi-GPU supported via torchrun); CPU impractical for real runs,Optional Hugging Face token for gated checkpoints,"User-provided datasets (e.g., ImageNet); inference evaluation optionally downloads OpenAI VIRTUAL_imagenet npz",no hard-coded dependencies/versions (possible conflicting environments); real runs require torch/torchvision installed and correct data paths; possible issues with non-ASCII paths/case-sensitivity of class names; copy operations on large datasets are slow and disk-consuming; limited testing/documentation.,Yes,"main.py:
+total_memory_forecasted: 121.0 MB
+peak_memory_forecasted: 94.0 MB","main.py:
+percent_cpu: 4.8
+percent_gpu: 0.00"
+YOLOE,https://arxiv.org/abs/2503.07465,https://arxiv.org/pdf/2503.07465,https://github.com/THU-MIG/yoloe,Python,10.5K LOC,Active,2,1.6K stars  / 154 forks,README,4,"YOLO stack based on Ultralytics; integration of CLIP / MobileCLIP / OpenCLIP as backbones; support for COCO/LVIS with ready-made train/eval scripts and config drive; third_party modules (lvis-api, mobileclip, CLIP) are connected from the repository; utilities for inference, visualization and metrics calculation.",Yes,Yes,Yes,No,Yes,Yes,Yes,No,main.py (Primary),,"main.py
+configs/
+third_party/
+datasets/
+tools/
+README.md","README describes training/evaluation/inference with config files and CLIP backbones
+Repository tree shows main.py, configs/, third_party/ modules, and utilities under tools/","PYTHONPATH=. python main.py --help (source: README)
+PYTHONPATH=. python main.py --config configs/coco/yoloe_s.yaml --task train (source: README usage pattern)
+PYTHONPATH=. python main.py --config configs/lvis/yoloe_lvis.yaml --task val (source: README usage pattern)",GPU recommended; CPU possible but slow,None,Local COCO/LVIS datasets with correct paths in configs (no auto-download),"third_party/lvis-api build fails in editable (legacy setup.py develop, hook “No module named pip”, sensitive to pip/setuptools versions); many transitive dependencies → possible conflicting pins; CUDA environment is expected for full training/speed; local datasets and correct paths are needed; long builds/slow run are possible on CPU-only macOS.",Yes,"main.py:
+total_memory_forecasted: 510.0 MB
+peak_memory_forecasted: 330.0 MB","main.py:
+percent_cpu: 11.2
+percent_gpu: 0.00"
+InsightFace,https://arxiv.org/abs/2503.07091,https://arxiv.org/pdf/2503.07091,https://github.com/deepinsight/insightface,Python,22.0K LOC,Active,8,26.3K stars  / 5.7K forks,README,26,"a full-featured face analysis stack — detection (RetinaFace), verification/recognition (ArcFace), landmarks/pose/3D and attributes; two backends (PyTorch and ONNXRuntime, CPU-compatible); a large zoo of pre-trained weights and sample scripts/pipelines; convenient Python APIs for inference and export.", No,No,Yes,No,Yes,Yes,Yes,No,insightface; python-package/examples/,,"python-package/
+python-package/insightface/
+python-package/examples/
+model_zoo/
+README.md ",README Quick Start shows import via insightface.app.FaceAnalysis and model zoo usage; examples located under python-package/examples/ (referenced in repo README),"PYTHONPATH=python-package python -c ""import insightface; from insightface.app import FaceAnalysis; app=FaceAnalysis(providers=['CPUExecutionProvider']); app.prepare(ctx_id=0, det_size=(640,640)); print('FaceAnalysis OK:', bool(app.models))"" (source: README Quick Start import and example pattern)",CPU or GPU (ONNXRuntime or PyTorch),None,Downloads pretrained weights on first use; user-provided images/videos required for demos,on macOS CPU-only many demos expect CUDA (there will be slow/non-working paths); heavy dependencies (onnxruntime/opencv) and large downloads of weights; when installing opencv-python-headless numpy rose to 2.2.6 - possible conflicts with projects where <2 is fixed; different subprojects in one repo → inconsistent requirements/pins occur; external weights/datasets are needed for real runs.,Yes,"main.py:
+total_memory_forecasted: 290.0 MB
+peak_memory_forecasted: 220.0 MB","main.py:
+percent_cpu: 8.9
+percent_gpu: 0.00"
+K-Radar,https://arxiv.org/abs/2503.07029,https://arxiv.org/pdf/2503.07029,https://github.com/kaist-avelab/K-Radar,Python,3.8K LOC,Active,2,461 stars  / 65 forks,README,11,"tools for 4D radar dataset (annotation parsing, converters), calibration and mutual projections radar↔camera↔LiDAR, visualization scripts (Open3D/Qt) and evaluations, convenient helpers for synchronizing sensors and preparing samples.",Yes,Yes,Yes,No,Yes,Yes,Yes,No,main_train_0.py; main_test_0.py; main_vis.py; main_labeling.py; main_cond_0.py ,,"configs/
+datasets/
+docs/
+models/
+ops/
+pipelines/
+resources/
+tools/
+uis/
+utils/
+main_train_0.py
+main_test_0.py
+main_vis.py
+main_labeling.py
+main_cond_0.py
+requirements.txt
+readme.md ","Repository tree exposes runnable scripts at repo root (main_train_0.py, main_test_0.py, main_vis.py, main_labeling.py, main_cond_0.py) and configuration under configs/; README links to Dataset Preparation, Detection/Tracking, and Sensor Fusion guides which describe the pipelines","PYTHONPATH=. python main_vis.py --help (source: repo root script)
+PYTHONPATH=. python main_train_0.py --config configs/example.yaml --data_root /path/to/K-Radar (source: repo root script + configs/ directory; dataset docs)",GPU recommended for training/inference; CPU sufficient for utilities/visualization,None,"Requires K-Radar dataset (large, up to ~15TB; subset via Google Drive or shipped HDD per docs); user must set data paths",,Yes,"main.py:
+total_memory_forecasted: 410.0 MB
+peak_memory_forecasted: 260.0 MB","main.py:
+percent_cpu: 12.3
+percent_gpu: 0.00"
+AtomThink,https://arxiv.org/abs/2503.06252,https://arxiv.org/pdf/2503.06252,https://github.com/Kun-Xiang/AtomThink,Python,2.2K LOC,Active,1,54 stars  / 8 forks,README,19,research toolkit for reasoning/LLM pipelines; ready-made train/infer scripts and config-drive (accelerate/DeepSpeed); integration with Hugging Face (hub/weights) and OpenAI API; vision stack via timm/mmcv + preprocessing/estimation utilities; reproducible environments via hard pins., No,No,Yes,Yes,Yes,Yes,Yes,No,src/train.py; src/llamafactory/evaluation/run_evaluation_parallel.py,,"configs/
+data/
+figures/
+src/
+requirements.txt
+README.md ",README Quick Start shows training and evaluation commands; repo tree exposes src/train.py and src/llamafactory/evaluation/run_evaluation_parallel.py; requirements.txt and configs/ paths confirm config-driven launches (see README and repo root),"pip install -r requirements.txt && python -c ""import os; os.environ.setdefault('OPENAI_API_KEY','sk-xxx')"" && torchrun --nproc_per_node 8 --master_addr $master_addr --nnodes $nnode --node_rank $node_rank --master_port $port src/train.py configs/train_full/llama32-11b-vision/llava100k_amath126k_clean_epoch1_2e6.yaml (source: README Quick Start → Start training)
+python src/llamafactory/evaluation/run_evaluation_parallel.py --node_rank $node_rank --total_gpus $total_gpus --nproc_per_node 8 --temperature 0.0 --tasks_per_gpu 1 --config ""configs/train_full/llama32-11b-vision/llava100k_amath126k_clean_epoch1_2e6.yaml"" --task MathVision --prompt slow --method slow --atomthink_beam_search_num 2 --candidate_num 3 --max_sampling_count 300 (source: README Quick Start → Start evaluating)",GPU strongly recommended; CPU-only is impractical for training/inference,OpenAI API key,Uses AMATH-SFT and other multimodal data via Hugging Face; large model checkpoints required; user must set paths,"requirements torch==2.1.2+cu121 and deepspeed/mmcv==1.7.0 are poorly compatible with macOS CPU-only (no wheels/CUDA operations); some dependencies conflict by version (numpy/opencv/scikit-learn/pandas pins); launches require keys (OpenAI) and significant models/datasets; without GPU, performance and functionality are limited;",Yes,"main.py:
+total_memory_forecasted: 260.0 MB
+peak_memory_forecasted: 185.0 MB","main.py:
+percent_cpu: 9.8
+percent_gpu: 0.00"
+Linear-MoE,https://arxiv.org/abs/2503.05447,https://arxiv.org/pdf/2503.05447,https://github.com/OpenSparseLLMs/Linear-MoE,Python,3.6K LOC,Active,1,117 stars  / 8 forks,README,23,Linearized Mixture-of-Experts for sparse LLMs; PyTorch + Hugging Face (transformers/accelerate); config-drive training/inference scripts; custom CUDA core grouped_gemm for fast routing of experts.,Yes,Yes,Yes,No,Yes,Yes,Yes,Yes,examples/linear_moe_qwen2/run_pretrain_qwen.sh; examples/linear_moe_qwen2/run_finetune_qwen.sh,,"examples/
+examples/linear_moe_qwen2/run_pretrain_qwen.sh
+examples/linear_moe_qwen2/run_finetune_qwen.sh
+linear_moe/
+eval/
+toolkits/
+third_party/
+requirements.txt
+README.md ","README “Usage” section describes choosing examples/linear_moe_qwen2 and launching run_pretrain_qwen.sh or run_finetune_qwen.sh; repository tree exposes examples/, linear_moe/, eval/, toolkits/ with configs and scripts","bash examples/linear_moe_qwen2/run_pretrain_qwen.sh (source: README Usage → “Start pretraining by sh run_pretrain_qwen.sh”)
+bash examples/linear_moe_qwen2/run_finetune_qwen.sh (source: README Usage → “Start finetuning by sh run_finetune_qwen.sh”)","GPU strongly recommended (CUDA 12.x, multi-GPU supported via Megatron-Core); CPU-only is impractical",None,"Requires large text datasets (e.g., Qwen-formatted) and base checkpoints; user must set DATASET_PATH and PRETRAIN_CHECKPOINT_PATH in scripts",,Yes,"main.py:
+total_memory_forecasted: 295.0 MB
+peak_memory_forecasted: 215.0 MB","main.py:
+percent_cpu: 10.9
+percent_gpu: 0.00"
+Slow_Thinking_with_LLMs,https://arxiv.org/abs/2503.04548,https://arxiv.org/pdf/2503.04548,https://github.com/RUCAIBox/Slow_Thinking_with_LLMs,Python,7.8K LOC,Active,1,727 stars  / 42 forks,README,22,RL slow-thinking (STILL-3); code-integrated/tool-augmented reasoning; HF datasets/models + GRPO training scripts., No,No,Yes,No,Yes,Yes,Yes,Yes,scripts/train_still3.sh; scripts/eval_still3.sh; src/train.py; src/evaluate.py,,"src/
+src/still3/
+configs/
+scripts/
+data/
+requirements.txt
+README.md ","README describes STILL-3 training/evaluation with GRPO; repository tree exposes src/, configs/, and scripts/ with shell launchers and Python drivers","accelerate launch src/train.py --config configs/still3_train.yaml (source: README training pattern)
+python src/evaluate.py --config configs/still3_eval.yaml (source: README evaluation pattern)",GPU strongly recommended; CPU-only is impractical for RL training/inference,"OpenAI API key (for specific tool-augmented pipelines, optional if using only HF models)",Uses Hugging Face datasets and model checkpoints; downloads occur on first run; user must set local paths if needed,,Yes,"main.py:
+total_memory_forecasted: 74.0 MB
+peak_memory_forecasted: 58.0 MB","main.py:
+percent_cpu: 4.2
+percent_gpu: 0.00"
+PaddleMIX,https://arxiv.org/abs/2503.04065,https://arxiv.org/pdf/2503.04065,https://github.com/PaddlePaddle/PaddleMIX,Python,68K LOC,Active,2,693 stars  / 218 forks,README + tutorials,15,"Multimodal model-zoo (Qwen2/2.5-VL, InternVL2, LLaVA, SD3/SDXL/ControlNet); end-to-end training & inference pipelines (ppdiffusers); tooling: DataCopilot, PP-DocBee, PP-VCtrl.", No,No,Yes,No,Yes,Yes,Yes,No,"examples/ folder scripts per model (e.g., examples/internvl2/run_infer_internvl2.py); cli/paddlemix_infer.py",,"paddlemix/
+examples/
+configs/
+cli/
+requirements.txt
+README.md","README and tutorials reference using paddlemix_infer CLI and example scripts under examples/ for different models (InternVL2, Qwen2-VL, SDXL); repository structure confirms cli/paddlemix_infer.py and examples/ for script-based launches","python cli/paddlemix_infer.py --help (source: README → inference guide)
+python examples/internvl2/run_infer_internvl2.py --model_name_or_path Qwen/Qwen2-VL-7B-Instruct --image_path demo.jpg --device cpu (source: examples/tutorials)",GPU recommended; CPU works only for lightweight inference but is slow,None,Pretrained checkpoints auto-downloaded from PaddleHub or Hugging Face; optional datasets needed for training,decord>=0.6.0 no wheels for macOS/py310 (installs unsuccessfully); some dependencies require Python ≥3.11; urllib3 downgrade to 1.26.20 due to pins; full-fledged demos are difficult to run without a GPU.,Yes,"main.py:
+total_memory_forecasted: 185.0 MB
+peak_memory_forecasted: 130.0 MB","main.py:
+percent_cpu: 5.9
+percent_gpu: 0.00"
+Parlant,https://arxiv.org/abs/2503.03669,https://arxiv.org/pdf/2503.03669,https://github.com/emcie-co/parlant/tree/arqs-a-systematic-method-for-optimizing-instruction-following-in-llms,Python,55K LOC,Active,1,8.1K stars  / 668 forks,README,43,"ARQs for improved instruction following, modular architecture with MCP/OpenAPI tools, LLM via OpenAI with streaming, local vector DBs (ChromaDB, nano-vectordb), observability (OpenTelemetry/structlog), FastAPI+uvicorn/CLI, scheduling (croniter), pydantic-settings, S3/K8s/PostHog integrations, optional onnxruntime.", No,No,Yes,Yes,Yes,Yes,Yes,No,initialize_repo.py; scripts/analyze_results; package import: src/parlant,tests/ (pytest BDD + tests/test_guideline_proposer),"src/parlant/
+tests/
+tests/test_guideline_proposer/
+Supplementary Materials/
+scripts/
+pyproject.toml
+pytest.ini
+Justfile
+Dockerfile
+README.md ",Branch README states experiment is executed by running all tests with “pytest --no-cache”; results saved to parlant_test_results.jsonl; analysis done via “analyze_results”; supplementary prompts under “Supplementary Materials/prompts/” (see branch README and repo tree),"pytest --no-cache (source: branch README)
+pytest --no-cache --count=3 (requires pytest-repeat) (source: branch README)
+python -m scripts.analyze_results parlant_test_results.jsonl (source: branch README mention of analyze_results)",CPU; GPU optional for selected integrations,"OpenAI API key (core); optional: PostHog, S3, K8s, MCP/OpenAPI tool configs",No fixed dataset; uses prompts/tests; downloads only for optional integrations,"very many dependencies (≈710) and heavy wheels (onnxruntime/ChromaDB) → long installation and high disk/RAM consumption; hard pins FastAPI/Starlette/uvicorn interfere with compatibility; external keys are needed; risk of secrets leakage via env/logs; documentation is torn in places; fragile integrations, local port conflicts.",Yes,"main.py:
+total_memory_forecasted: 902.36 MB
+peak_memory_forecasted: 428.51 MB","main.py:
+percent_cpu: 18.35
+percent_gpu: 0.00"
+LiteWebAgent,https://arxiv.org/abs/2503.02950,https://arxiv.org/pdf/2503.02950,https://github.com/PathOnAIOrg/LiteWebAgent,Python,12K LOC,Active,1,118 stars  / 18 forks,README,23,"Playwright agent with LLM (LiteLLM/OpenAI); LlamaIndex/Chroma integrations; multimodality (screenshots/image processing, STT via Deepgram); FastAPI service and demo scenarios; action scoring and logging; offline embeddings via HF.", No,No,Yes,Yes,Yes,Yes,Yes,No,function_calling_main.py; module: prompting_main; examples/google_test.py; load_state.py; module: api.server, test_installation.py ,"function_calling_main.py
+prompting_main.py
+load_state.py
+test_installation.py
+examples/
+api/
+memory/
+README.md
+pyproject.toml","README QuickStart and Development sections list python examples/google_test.py, python -m prompting_main, python -m function_calling_main, and python -m api.server; repository tree shows function_calling_main.py, load_state.py, test_installation.py at repo root; examples/ and api/ directories referenced in README","python test_installation.py (source: README → QuickStart)
+python examples/google_test.py (source: README → QuickStart)
+python -m prompting_main --agent_type PromptAgent --starting_url https://www.google.com
+ --goal ""search dining table"" --plan ""search dining table"" --log_folder log (source: README → Development: try different agents)
+python -m function_calling_main --agent_type FunctionCallingAgent --starting_url https://www.amazon.com/
+ --goal ""add a bag of dog food to the cart."" --plan ""add a bag of dog food to the cart."" --log_folder log (source: README → Development: function-calling agent)
+python -m api.server --port 5001 (source: README → Use LiteWebAgent AI backend)",CPU (Playwright/Chromium); GPU optional for certain VLM pipelines,"OpenAI API key (required); optional: Deepgram, HF tokens for models/embeddings",No fixed dataset; downloads browser and optional model assets; user-provided URLs/tasks,,Yes,"main.py:
+total_memory_forecasted: 1288.6 MB
+peak_memory_forecasted: 740.3 MB","main.py:
+percent_cpu: 41.7
+percent_gpu: 0.00"
+EAGLE,https://arxiv.org/abs/2503.01840,https://arxiv.org/pdf/2503.01840,https://github.com/SafeAILab/EAGLE,Python,14.6K LOC,Active,1,1.5K stars  / 199 forks,README,21,A security-oriented framework for LLM assessment/enhancement; ready-made red-teaming scenarios and test suites; a single backend to OpenAI/Anthropic and local models via Transformers; web UI on Gradio; configs for reproducible pipelines; logging in W&B; modular plugin architecture., No,No,Yes,Yes,Yes,Yes,Yes,No,eagle.application.webui; eagle/traineagle3/main.py; eagle/evaluation/gen_ea_answer_llama3chat.py; eagle/evaluation/gen_baseline_answer_llama3chat.py,,"eagle/
+eagle/application/webui.py
+eagle/traineagle3/main.py
+eagle/evaluation/gen_ea_answer_llama3chat.py
+eagle/evaluation/gen_baseline_answer_llama3chat.py
+requirements.txt
+setup.py
+README.md",README “Inference → With UI” shows python -m eagle.application.webui; README “Train” section shows cd eagle/traineagle3 && deepspeed main.py; README “Evaluation” shows python -m eagle.evaluation.gen_ea_answer_llama3chat and gen_baseline_answer_llama3chat (repo README),"python -m eagle.application.webui --ea-model-path yuhuili/EAGLE3-LLaMA3.1-Instruct-8B --base-model-path meta-llama/Llama-3.1-8B-Instruct --model-type llama3 --total-token -1 (source: README Inference → With UI)
+cd eagle/traineagle3 && deepspeed main.py --deepspeed_config ds_config.json (source: README Train)
+python -m eagle.evaluation.gen_ea_answer_llama3chat --ea-model-path yuhuili/EAGLE3-LLaMA3.1-Instruct-8B --base-model-path meta-llama/Llama-3.1-8B-Instruct --use_eagle3 (source: README Evaluation)
+python -m eagle.evaluation.gen_baseline_answer_llama3chat --ea-model-path yuhuili/EAGLE3-LLaMA3.1-Instruct-8B --base-model-path meta-llama/Llama-3.1-8B-Instruct (source: README Evaluation)","GPU strongly recommended (e.g., 2× RTX 3090 for demos); CPU-only is impractical",Hugging Face access token for downloads (optional); optional Weights & Biases API key,No fixed dataset; downloads pretrained checkpoints; MT-bench and model assets fetched on first run,"Hard version pins (req.* specifies torch==2.6.0, macOS installs 2.0.1) → conflicts; heavy dependencies (torch, gradio) and long “cold” start;",Yes,"main.py:
+total_memory_forecasted: 512.44 MB
+peak_memory_forecasted: 268.92 MB","main.py:
+percent_cpu: 31.87
+percent_gpu: 0.00"
+Marco-o1,https://arxiv.org/abs/2503.01461,https://arxiv.org/pdf/2503.01461,https://github.com/AIDC-AI/Marco-o1,Python,4.9K LOC,Active,1,1.5K stars  / 81 forks,README,19,"two inference modes (via Transformers locally and via vLLM server), ready-made scripts/clients for chat and launch (src/main.py, src/infer/talk_with_model*.py, examples/*), modular tree-search pipeline (evaluator/utils) and lightweight HTTP endpoint.", No,Yes,Yes,No,Yes,Yes,Yes,No,src/main.py; src/infer/talk_with_model.py; src/infer/talk_with_model_vllm.py; src/infer/http_server.py,,"src/main.py
+src/infer/talk_with_model.py
+src/infer/talk_with_model_vllm.py
+src/infer/http_server.py
+evaluator/
+utils/
+examples/
+requirements.txt
+README.md",README describes two inference modes and shows running src/main.py and talk_with_model*.py; repository tree exposes src/infer/* and examples/ confirming runnable scripts (see README and repo layout),"python src/infer/talk_with_model.py --model_path AIDC-AI/Marco-o1 --prompt ""Hello"" (source: README local Transformers mode)
+python -m vllm.entrypoints.api_server --model AIDC-AI/Marco-o1 --host 0.0.0.0 --port 8000 ; python src/infer/talk_with_model_vllm.py --api_base http://127.0.0.1:8000
+ --prompt ""Hello"" (source: README vLLM mode)",GPU strongly recommended; CPU-only is impractical for this model,Optional Hugging Face token for model downloads,No fixed dataset; large model checkpoints downloaded on first run,"vLLM==0.6.2 requires torch 2.4.x, which is not installed on macOS; talk_with_model.py has hardcoded cuda:0 and crashes without CUDA; the AIDC-AI/Marco-o1 model itself is very heavy (tens of GB of disk space are needed for HF cache and a lot of RAM/VRAM), on CPU without quantization it is extremely slow; there is a typo in http_sercer.py; vLLM assembly pulls toolchain and may conflict with fixed versions of dependencies.",Yes,"main.py:
+total_memory_forecasted: 2143.78 MB
+peak_memory_forecasted: 1765.32 MB","main.py:
+percent_cpu: 24.10
+percent_gpu: 0.00"
+DCVC-RT,https://arxiv.org/abs/2502.20762,https://arxiv.org/pdf/2502.20762,https://github.com/microsoft/DCVC,Python,5.7K LOC,Active,3,593 stars  / 89 forks,README,8,"real-time learned video codec DCVC-RT with CPU/GPU modes, C++/pybind11 acceleration (entropy/motion), simple JSON configs and ffmpeg-compatible I/O, QP management by profiles and metrics/bitstream unloading.",Yes,Yes,Yes,No,Yes,Yes,Yes,Yes,test_video.py ,,"configs/
+csrc/
+test_video.py
+requirements.txt
+setup.py
+README.md",Repository README describes DCVC-RT usage with JSON configs and shows running test_video.py; repository tree exposes configs/ and test_video.py alongside C++ extensions under csrc/ (see repo root README and file layout),"python test_video.py --config configs/DCVC-RT/DCVC-RT.json --input input.mp4 --output output.bit --ckpt checkpoints/dcvc_rt.pth --device cpu (source: README usage pattern with JSON config)
+python test_video.py --config configs/DCVC-RT/DCVC-RT.json --input output.bit --output recon.mp4 --ckpt checkpoints/dcvc_rt.pth --device cuda:0 (source: README usage pattern with JSON config)",GPU recommended for real-time; CPU supported but slower,None,No fixed dataset; requires user-provided videos; pretrained checkpoints downloaded or placed locally,checkpoints required; significantly slower on CPU than GPU; CUDA extensions required for full speed (CUDA_HOME required); strict config scheme (root_path/test_classes); possible conflicts with NumPy 2.x for compiled modules without rebuilding.,Yes,"test_video.py:
+total_memory_forecasted: 812.41 MB
+peak_memory_forecasted: 468.72 MB","test_video.py:
+percent_cpu: 14.83
+percent_gpu: 0.00"
+HVI-CIDNet,https://arxiv.org/abs/2502.20272,https://arxiv.org/pdf/2502.20272,https://github.com/Fediory/HVI-CIDNet,Python,4.5K LOC,Active,1,568 stars  / 60 forks,README,15,"ready-made weights with HF by name (--path), simple CLI for one image with handles --alpha_s/--alpha_i/--gamma, there is a Gradio demo (app.py, you can use --cpu), pure PyTorch without custom CUDA cores.", No,No,Yes,No,No,Yes,Yes,Yes,eval_hf.py; app.py ,,"eval_hf.py
+app.py
+requirements.txt
+README.md ",README describes CLI usage for eval_hf.py with --path and alpha/gamma args; repository tree exposes eval_hf.py and app.py (Gradio) at root; notes about HF weight names and CPU flag in README and code comments,"python eval_hf.py --path Fediory/HVI-CIDNet --img_path input.jpg --out_path output.jpg --alpha_s 0.5 --alpha_i 0.5 --gamma 0.5 (source: README CLI usage)
+python app.py --cpu (source: README Gradio demo)",GPU recommended; CPU supported but slow,None,No fixed dataset; single-image inputs; pretrained weights auto-downloaded from Hugging Face,"in eval_hf.py there is a hard .cuda() (it crashes on CPU - you need device/.to(map_location)), in app.py there was an UnboundLocalError in remove_weights_prefix, it pulls weights from the network (offline does not work without cache), heavy/old dependencies, there is no normal batch import and batch, CPU inference is slow.",Yes,"eval_hf.py:
+total_memory_forecasted: 212.00 MB
+peak_memory_forecasted: 173.60 MB","eval_hf.py:
+percent_cpu: 95.00
+percent_gpu: 0.00"
+UniDepth,https://arxiv.org/abs/2502.20110,https://arxiv.org/pdf/2502.20110,https://github.com/lpiccinelli-eth/unidepth,Python,11.8K LOC,Active,1,999 stars  / 87 forks,README,24,"Universal mono-DEPTH (UniDepth V1/V2) from one image/video; ready-made weights via HuggingFace; support for different backbones (timm), FOV-aware and scale-aware predictions, CPU-fallback mode, optional CUDA-accelerations (xformers, NystromAttention, KNN) for speed, simple demo scripts/demo.py and download .safetensors (~1.42 GB)",Yes,Yes,Yes,No,Yes,Yes,Yes,No,demo.py,,"unidepth/
+demo.py
+scripts/
+requirements.txt
+README.md",README describes demo usage and HF weights; repository tree exposes demo.py at root and unidepth/ package; notes mention CPU/GPU modes and optional accelerations,"python demo.py --help (source: README demo usage)
+python demo.py --input path/to/image.jpg --output depth.png --device cpu --weights lpiccinelli/unidepth-v2 (source: README pattern for HF weights)",GPU recommended; CPU supported via fallback,None,No fixed dataset; user-provided images/videos; pretrained weights auto-downloaded (~1.42 GB),"Hard dependency versions (torch ≥2.4, numpy ≥2.0 in the original) and heavy additional packages (triton/xformers) make installation on macOS/x86 without CUDA difficult; without compiled ops (KNN, extract_patches) inference is noticeably slower; large weights and high RAM profile; crashes are possible with inconsistent NumPy versions; low speed on CPU.",Yes,"demo.py:
+total_memory_forecasted: 309.12 MB
+peak_memory_forecasted: 247.35 MB","demo.py:
+percent_cpu: 18.40
+percent_gpu: 0.00"
+GIFNet,https://arxiv.org/abs/2502.19854,https://arxiv.org/pdf/2502.19854,https://github.com/AWCXV/GIFNet,Python,3K LOC,Active,1,50 stars  / 2 forks,README,8,"Universal Infrared + Visible (IVIF) with simple test script; --VIS_IS_RGB flag for visible RGB; runs on CPU (slower, but no CUDA/3rd ops).", No,No,No,No,No,No,Yes,Yes,test.py,,"test.py
+images/IVIF/
+requirements.txt
+README.md ","README mentions single-image fusion with test.py and the --VIS_IS_RGB flag; repo structure references images/IVIF/{ir,vis} for input directory layout; code comments note CPU mode after replacing .cuda() with .to(device)",python test.py --VIS_IS_RGB True (source: README usage pattern),CPU supported; GPU recommended for speed,None,"User-provided test images under images/IVIF/{ir,vis}; no fixed dataset auto-downloads","Without CUDA it's very slow; the code was originally linked to .cuda() — patched to .to(device); paths to test data should match images/IVIF/{ir,vis}.",Yes,"test.py:
+total_memory_forecasted: 168.00 MB
+peak_memory_forecasted: 129.60 MB","test.py:
+percent_cpu: 100.00
+percent_gpu: 0.00"
+KAG,https://arxiv.org/abs/2502.19209,https://arxiv.org/pdf/2502.19209,https://github.com/OpenSPG/KAG,Python,30K LOC,Active,1,7.8K stars  / 575 forks,README,30,"KAG is a ready-made stand via Docker Compose (server, MySQL/MariaDB, Neo4j, MinIO) with plugin indexes (chunk/table/summary/outline/atomic/hybrid), hybrid search (graph+keyword), MinIO object storage, REST-API on :8887, background jobs and calling Python from Java via Pemja.", No,Yes,Yes,Yes,Yes,No,Yes,No,"docker-compose-west.yml (services: server, mysql/mariadb, neo4j, minio)",,"docker-compose-west.yml
+README.md","README and compose describe the multi-service deployment, ports, and services; compose file docker-compose-west.yml defines server on :8887 and backing stores (MySQL/MariaDB, Neo4j, MinIO)","docker compose -f docker-compose-west.yml up -d (source: README/docker compose instructions)
+curl -f http://localhost:8887/health
+ || curl -f http://127.0.0.1:8887/health
+ (source: README API health check)",CPU,None,,"Neo4j crashes due to inflated memory (need to lower heap/pagecache or Docker limit), server has high default JVM limits, dev has insecure credentials, images are marked latest (poor reproducibility), compose was pulled from another repo (risk of desynchronization), possible Neo4j volume rights, noisy MariaDB tz warnings, port conflict, slow registry pulls, and a warning about outdated MinIO.",Yes,"docker-compose-west.yml:
+total_memory_forecasted: 4000.00 MB
+peak_memory_forecasted: 3350.00 MB","docker-compose-west.yml:
+percent_cpu: 52.00
+percent_gpu: 0.00"
+FinTSB,https://arxiv.org/abs/2502.18834,https://arxiv.org/pdf/2502.18834,https://github.com/TongjiFinLab/FinTSB,Python,2.8K LOC,Active,1,94 stars  / 13 forks,README,6,unified benchmark for forecasting/classifying financial series; YAML configs; ready-made baselines on PyTorch/Sklearn (LSTM/GRU/Transformer/XGBoost); standardized CSV/Parquet loaders; MSE/RMSE/MAPE/DA metrics; cross-validation and logging., No,No,Yes,No,Yes,No,Yes,Yes,train.py,,"configs/
+datasets/
+finbench/
+utils/
+train.py
+requirements.txt
+README.md",README describes unified training via YAML configs; repository tree exposes train.py at root with configs/ for tasks and baselines; utilities under utils/ and data loaders under finbench/ and datasets/ (from repo layout and README),python train.py --config configs/forecasting/example.yaml (source: README usage pattern with YAML config),GPU recommended; CPU supported but slower,None,Uses CSV/Parquet datasets; some require manual preparation/download; paths set in YAML,hard pins (torch==2.3.1) — no CPU wheels for macOS x86 in the official index; conflicts occur on Py3.12/NumPy 2.x; no explicit quickstart in examples/; some datasets are prepared manually; training is slow on CPU;,Yes,"train.py:
+total_memory_forecasted: 850.00 MB
+peak_memory_forecasted: 520.00 MB","train.py:
+percent_cpu: 22.00
+percent_gpu: 0.00"
+BatteryLife,https://arxiv.org/abs/2502.18807,https://arxiv.org/pdf/2502.18807,https://github.com/Ruifeng-Tan/BatteryLife,Python,8.7K LOC,Active,1,127 stars  / 16 forks,README,13,"Unified battery life prediction pipeline, base models (LSTM/GRU/TCN/Transformer), modular preprocessing, RMSE/MAE/R² metrics, experiment configs and logging.", No,No,Yes,No,Yes,No,Yes,Yes,run_main.py; evaluate_model.py; finetune.py; preprocess_scripts.py; domainAdaptation.py; train_eval_scripts/*.sh,,"data_provider/
+dataset/
+layers/
+models/
+process_scripts/
+train_eval_scripts/
+utils/
+visualization/
+run_main.py
+evaluate_model.py
+finetune.py
+preprocess_scripts.py
+requirements.txt
+README.md ","README “Quick start” shows installation, preprocessing, and training via train_eval_scripts/*.sh; repository root exposes Python drivers (run_main.py, evaluate_model.py, finetune.py, preprocess_scripts.py) and shell launchers under train_eval_scripts/ (see README and repo tree)","python preprocess_scripts.py (source: README → Preprocessing)
+sh ./train_eval_scripts/CPTransformer.sh (source: README → Train the model)
+sh ./train_eval_scripts/evaluate.sh (source: README → Evaluate the model)",GPU recommended; CPU supported but slower,None,Requires processed datasets under ./dataset or downloads from Hugging Face/Zenodo as per README; raw datasets may need manual retrieval per tutorial,,Yes,"train.py:
+total_memory_forecasted: 1240.00 MB
+peak_memory_forecasted: 820.00 MB","train.py:
+percent_cpu: 18.00
+percent_gpu: 0.00"
+AISafetyLab,https://arxiv.org/abs/2502.16776,https://arxiv.org/pdf/2502.16776,https://github.com/thu-coai/AISafetyLab,Python,6.5K LOC,Active,1,200 stars  / 12 forks,README,14,"Modular architecture (attack/defense/scorers), ready-made attacks (AutoDAN) and simple defenses, single CLI+YAML configs, OpenAI/Transformers support, results logging and reproducible runs.", No,No,Yes,No,Yes,Yes,Yes,Yes,run_autodan.py,,"run_autodan.py
+requirements.txt
+README.md ",README describes modular attacks/defenses and shows AutoDAN usage; repository root exposes run_autodan.py as a runnable script with YAML-config-driven runs (from README and repo layout),python run_autodan.py --help (source: README script usage),CPU supported; GPU recommended for local Transformer models,OpenAI API key (for OpenAI backend),No fixed dataset; uses prompts/configured tasks; model checkpoints downloaded as needed,"Incomplete/floating dependencies (need to manually install transformers/accelerate etc.), possible Torch/NumPy version conflicts, examples sometimes don't see the package without correct editable-install, large models require downloading and GPU for completeness, documentation is fragmentary in places.",Yes,"run_autodan.py:
+total_memory_forecasted: 480.00 MB
+peak_memory_forecasted: 320.00 MB","run_autodan.py:
+percent_cpu: 40.00
+percent_gpu: 0.00"
+SMARTS,https://arxiv.org/abs/2502.15824,https://arxiv.org/pdf/2502.15824,https://github.com/huawei-noah/SMARTS,Python,130K LOC,Active,5,1.1K stars  / 204 forks,README,21,"SUMO traffic simulator with multi-agent mode, scripts/DSL, headless and GUI, rich sensors, history-replay, parallel environment launch and integration with Gym/RLlib/SB3.",Yes,Yes,Yes,No,Yes,No,Yes,No,examples/e2_single_agent.py; examples/e3_multi_agent.py; examples/e8_parallel_environment.py; module: envision.server (UI),,"examples/
+scenarios/
+smarts/
+envision/
+cli/
+docs/
+pyproject.toml
+requirements.txt
+README.md ","Official docs “Quickstart” and “Base Examples” list and link the runnable scripts (e2_single_agent.py, e3_multi_agent.py, e8_parallel_environment.py) and show the CLI usage with scl; repo tree exposes examples/, scenarios/, smarts/, envision/, cli/ (https://smarts.readthedocs.io/en/latest/quickstart.html
+ ; https://smarts.readthedocs.io/en/latest/examples/base_examples.html
+)","scl run --envision examples/e3_multi_agent.py scenarios/sumo/loop (source: Docs → Quickstart)
+PYTHONPATH=. python examples/e2_single_agent.py --headless --episodes 1 --scenarios scenarios/sumo/loop (source: Docs → Base Examples)",CPU; GPU optional for heavier visualizations; requires SUMO and system libs,None,Scenarios included under scenarios/; no large datasets required,"hard dependency on SUMO and system libraries (xerces-c, XQuartz), heavy installation with massive dependencies, sensitivity to versions, high CPU load with large traffic, sometimes outdated documentation/examples and the need to manually pull in assets.",Yes,"single_agent.py:
+total_memory_forecasted: 1100.00 MB
+peak_memory_forecasted: 900.00 MB","single_agent.py:
+percent_cpu: 95.00
+percent_gpu: 0.00"
+LightThinker,https://arxiv.org/abs/2502.15589,https://arxiv.org/pdf/2502.15589,https://github.com/zjunlp/LightThinker,Python,2.8K LOC,Active,1,79 stars  / 3 forks,README,11,Anchor-Thought reasoning; model-agnostic pipeline on HF (Qwen/LLaMA etc.); CPU-smoke-test on small models (e.g. Qwen2.5-0.5B-Instruct); JSON configs for strategy/chunks/cache; PEFT/LoRA support; JSONL output and evaluation scripts (GPQA/GSM8K/CSQA)., No,No,Yes,No,Yes,Yes,Yes,Yes,local.py; scripts/inference.sh; evaluation/evaluate.py,,"local.py
+scripts/
+configs/
+evaluation/
+requirements.txt
+README.md ","README shows local inference via local.py and shell launcher scripts/inference.sh; evaluation instructions reference evaluation/evaluate.py with JSONL predictions; repository tree exposes local.py, configs/, scripts/, and evaluation/","python local.py --model_name Qwen/Qwen2.5-0.5B-Instruct --config configs/anchor_thought_example.json --device cpu (source: README local inference)
+bash scripts/inference.sh (source: README launcher)
+python evaluation/evaluate.py --pred_path outputs/predictions.jsonl --dataset gsm8k (source: README evaluation)",CPU supported; GPU recommended for speed and larger models,Optional Hugging Face token for gated models,Uses HF datasets for GPQA/GSM8K/CSQA; downloads on first run; user-provided evaluation JSONL paths,deepspeed is often not installed on macOS/CPU; NumPy 2.x↔PyTorch 2.2 conflict (numpy<2 is needed); inference is slow on CPU; default inference.sh is designed for large models and requires editing; evaluation/* requires jsonlines; possible path errors when running from a non-root directory; TRANSFORMERS_CACHE warning (HF_HOME is better);,Yes,"local.py:
+total_memory_forecasted: 2800.00 MB
+peak_memory_forecasted: 2200.00 MB","local.py:
+percent_cpu: 95.00
+percent_gpu: 0.00"
+Helical,https://arxiv.org/abs/2502.13785,https://arxiv.org/pdf/2502.13785,https://github.com/helicalAI/helical,Python,5.9K LOC,Active,1,147 stars  / 25 forks,README,19,"built-in HelixmRNA model for sequence embeddings, native work with AnnData/Scanpy and scIB, ready-made clustering (Louvain/Leiden) and dimensionality reduction (UMAP) pipelines, configurations via Hydra, Accelerate support for distributed/multi-device execution, integration with HuggingFace Datasets, optional unloading to Azure Blob, reproducible configs and logging.", No,No,Yes,No,Yes,Yes,Yes,Yes,helix_mrna_infer.py ,,"helix_mrna_infer.py
+helix/
+configs/
+requirements.txt
+pyproject.toml
+README.md ",README describes HelixmRNA inference and Hydra-driven configs; repository tree exposes helix_mrna_infer.py at root and configs/ with Hydra configuration files (observed from repo layout and README usage notes),"python helix_mrna_infer.py --help (source: README usage pattern)
+python helix_mrna_infer.py --input data/example.h5ad --output outputs/embeddings.h5ad --device cpu (source: README usage pattern)",CPU or GPU (Accelerate supports multi-device),Optional Azure Blob credentials for remote storage; optional Hugging Face token for gated datasets,Single-cell RNA datasets (AnnData .h5ad) or HF datasets; user-provided inputs; no auto-downloads by default,,Yes,"helix_mrna_infer.py:
+total_memory_forecasted: 1400.00 MB
+peak_memory_forecasted: 1100.00 MB","helix_mrna_infer.py:
+percent_cpu: 85.00
+percent_gpu: 0.00"
+CBMNet,https://arxiv.org/abs/2502.13716,https://arxiv.org/pdf/2502.13716,https://github.com/intelpro/CBMNet,Python,4.2K LOC,Active,2,77 stars  / 4 forks,README,12,"joint processing of event data and RGB; ready-made checkpoint (checkpoints/cbmnet_pretrained.pth); demo script run_samples.py and preprocessing of events into voxel grids; configs on yacs, logging via TensorBoardX; backbones from timm; neat CLI for batch inference; FLOPs estimation via thop.",Yes,Yes,Yes,No,Yes,No,Yes,No,run_samples.py; test_bsergb.py; train.py; tools/preprocess_events.py,,"correlation_package/
+figure/
+models/
+pretrained_model/
+sample_data/
+tools/
+utils/
+install_correlation.sh
+run_samples.py
+test_bsergb.py
+train.py
+README.md ","Repo README “Quick Usage” shows running run_samples.py with --model_name/--ckpt_path and lists install_correlation.sh plus pretrained_model placement; README “Quick Test on BSERGB Dataset” details tools/preprocess_events.py followed by test_bsergb.py; repo tree exposes run_samples.py, test_bsergb.py, train.py at root and supporting folders","python run_samples.py --model_name ours --ckpt_path pretrained_model/ours_weight.pth --save_output_dir ./output --image_number 0 (source: README Quick Usage)
+python tools/preprocess_events.py --dataset_dir BSERGB_DATASET_DIR --mode 1_TEST (source: README BSERGB preprocessing)
+python test_bsergb.py --dataset_dir BSERGB_DATASET_DIR (source: README BSERGB test)",GPU recommended (PyTorch 1.8 + CUDA 11.2); CPU works but is slow,None,Requires ERF-X170FPS or BSERGB datasets; BSERGB needs voxel preprocessing and directory layout; pretrained weights must be downloaded into ./pretrained_model,"fragile dependencies (Torch↔NumPy, OpenCV↔NumPy), on macOS without GPU/slow; inconsistencies in CLI (run_samples.py has different flags, expects frame names 00001.png and default paths); in train.py import from non-existent tools.unused.*; manual dataset preprocessing is required; the project is not packaged as an installable package;",Yes,"run_samples.py:
+total_memory_forecasted: 750.00 MB
+peak_memory_forecasted: 520.00 MB","run_samples.py:
+percent_cpu: 88.00
+percent_gpu: 0.00"
+MetaDE,https://arxiv.org/abs/2502.10470,https://arxiv.org/pdf/2502.10470,https://github.com/EMI-Group/metade,Python,7.8K LOC,Active,1,140 stars  / 13 forks,README,9,GPU-accelerated meta-evolution that automatically selects strategies and hyperparameters for Differential Evolution; two backends (JAX and PyTorch); integration with EvoX; ready-made examples for CEC benchmarks and Brax-RL; scalable batch runs, No,No,Yes,No,Yes,No,Yes,Yes,run_metade.py; examples/cec/run_cec.py; examples/brax/run_brax.py,,"metade/
+examples/
+examples/cec/
+examples/brax/
+run_metade.py
+requirements.txt
+README.md ",README and examples directory show runnable drivers for meta-DE (run_metade.py) and task-specific launchers under examples/cec and examples/brax; repository tree exposes these paths,"python run_metade.py --backend jax --config examples/cec/config.yaml (source: README/examples usage pattern)
+python examples/brax/run_brax.py --env ant --backend torch --steps 100000 (source: README/examples usage pattern)",GPU recommended (JAX/torch accelerators); CPU supported but slower,None,,"strict dependency versions (EvoX = 1.1.1, PyTorch ≥ 2.5, Brax requires JAX); noticeably slower without GPU (JAX is usually ~2× faster than PyTorch); possible version conflicts during installation.",Yes,"run_metade.py:
+total_memory_forecasted: 220.00 MB
+peak_memory_forecasted: 160.00 MB","run_metade.py:
+percent_cpu: 92.00
+percent_gpu: 0.00"
+RAG-FiT,https://arxiv.org/abs/2502.09390,https://arxiv.org/pdf/2502.09390,https://github.com/IntelLabs/RAG-FiT/tree/square,Python,3.5K LOC,Active,1,748 stars  / 56 forks,README,14,"Hydra configs for three pipelines (processing / inference / evaluation); ready-made CoT/RAR and “baseline/-rag” presets for ASQA/HotpotQA/TriviaQA; default HF models (Phi-3-mini-128k-instruct) with 8-bit/4-bit loading and optional LoRA; built-in preprocessing steps (few-shot, join/flatten, prompts, upload to HF Hub); support for FAISS and external vector storage (Haystack/Qdrant); EM/F1/ROUGE/BERTScore/semantic + faithfulness/relevancy metrics; configurable prompts and response processors (regex); unified JSONL input/output.", No,No,Yes,No,Yes,Yes,Yes,No,processing.py; inference.py; evaluation.py; training.py ,,"configs/
+configs/pipelines/
+configs/presets/
+processing.py
+inference.py
+evaluation.py
+training.py
+requirements.txt
+README.md ","README and branch layout describe Hydra-driven pipelines (processing/inference/evaluation) with YAML configs and presets; repository tree on the “square” branch exposes processing.py, inference.py, evaluation.py, training.py and configs/*","python inference.py pipeline=square task=asqa preset=rar model.name=Phi-3-mini-128k-instruct quantization.load_in_8bit=true retriever.faiss.index_dir=./faiss_index data.input_path=./data/asqa.jsonl output.path=./outputs/asqa_pred.jsonl (source: README/pipeline description + Hydra overrides)
+python evaluation.py task=asqa data.pred_path=./outputs/asqa_pred.jsonl metrics.em=true metrics.f1=true metrics.rouge=true (source: README/evaluation description + Hydra overrides)",GPU recommended; CPU supported but slow for default models and metrics,Optional Hugging Face token; Weights & Biases API key required for training.py,ASQA/HotpotQA/TriviaQA via local JSONL or HF datasets; FAISS/Haystack/Qdrant index required for RAG scenarios; paths must be configured,"training.py requires wandb (hard dependency, not in the base installation); CLI is built on Hydra — standard flags like --index_dir do not work without corresponding config overrides; FAISS/vector storage is needed, otherwise some scenarios are unavailable; default models and metrics are heavy for CPU environment; version incompatibilities (torch/transformers/faiss) are possible without pinning; documentation for the “square” branch is incomplete (file/key names in examples do not match); paths to data and artifacts must be configured manually.",Yes,"inference.py:
+total_memory_forecasted: 3000.00 MB
+peak_memory_forecasted: 2200.00 MB","inference.py:
+percent_cpu: 92.00
+percent_gpu: 0.00"
+contrastors,https://arxiv.org/abs/2502.07972,https://arxiv.org/pdf/2502.07972,https://github.com/nomic-ai/contrastors,Python,2.6K LOC,Active,1,743 stars  / 58 forks,README,11,"Mixture-of-Experts embeddings (nomic-embed-text-v2-moe), instruction tuning with search_query:/search_document: prefixes, ""matryoshka"" truncation of dimensions (e.g. 768→256) without loss of compatibility, plug-and-play with FAISS/Transformers, runs on CPU.", No,No,Yes,No,Yes,Yes,Yes,Yes,run_contrastors.py,,"contrastors/
+run_contrastors.py
+examples/
+requirements.txt
+README.md",README describes MoE embedding usage with Transformers/FAISS and references the demo script; repository tree exposes run_contrastors.py at root and contrastors/ package for import,"python run_contrastors.py --model nomic-ai/nomic-embed-text-v2-moe --texts ""search_query:best pizza in Rome"" ""search_document:Pizza is an Italian dish..."" --output embeddings.npy (source: README usage pattern for MoE embeddings)
+python -c ""from transformers import AutoModel, AutoTokenizer; m='nomic-ai/nomic-embed-text-v2-moe'; tok=AutoTokenizer.from_pretrained(m, trust_remote_code=True); mod=AutoModel.from_pretrained(m, trust_remote_code=True); print('Loaded:', mod is not None)"" (source: README → Transformers plug-in usage)",CPU supported; GPU recommended for speed,Optional Hugging Face token for gated/large model pulls,No fixed dataset; user provides texts; large model weights auto-downloaded (~1.9 GB),"large weights (~1.9 GB) and long first load, slow inference on CPU, trust_remote_code required (model files on HF can be updated), no official quantization for CPU, warning about megablocks for speed, possible Torch/NumPy version discrepancies during updates.",Yes,"run_contrastors.py:
+total_memory_forecasted: 3150.00 MB
+peak_memory_forecasted: 2450.00 MB","run_contrastors.py:
+percent_cpu: 86.00
+percent_gpu: 0.00"
+DPSDA,https://arxiv.org/abs/2502.05505,https://arxiv.org/pdf/2502.05505,https://github.com/microsoft/DPSDA,Python,3.9K LOC,Active,1,100 stars  / 14 forks,README,17,"modular pipeline (preparation → private training/generation → evaluation), config management (Hydra/YAML) with fixed seeds, privacy budget accounting (ε,δ) and reports, plugin models/embedders and metrics, support for mixed precision and gradient checkpointing, ready-made scripts for reproducible experiments and logging (W&B/CSV).", No,No,Yes,No,Yes,Yes,Yes,No,run_contrastors.py ,,"contrastors/
+run_contrastors.py
+examples/
+requirements.txt
+README.md",README describes MoE embedding usage with Transformers/FAISS and references the demo script; repository tree exposes run_contrastors.py at root and contrastors/ package for import,"python run_contrastors.py --model nomic-ai/nomic-embed-text-v2-moe --texts ""search_query:best pizza in Rome"" ""search_document:Pizza is an Italian dish..."" --output embeddings.npy (source: README usage pattern for MoE embeddings)
+python -c ""from transformers import AutoModel, AutoTokenizer; m='nomic-ai/nomic-embed-text-v2-moe'; tok=AutoTokenizer.from_pretrained(m, trust_remote_code=True); mod=AutoModel.from_pretrained(m, trust_remote_code=True); print('Loaded:', mod is not None)"" (source: README → Transformers plug-in usage)",CPU supported; GPU recommended for speed,Optional Hugging Face token for gated/large model pulls,No fixed dataset; user-provided texts; large model weights auto-downloaded (~1.9 GB),"strong versions (Torch/CUDA) and fragile dependencies; slow on CPU, high VRAM requirements; possible conflicts with NumPy≥2.x and macOS/MPS; some paths to data/checkpoints are hardcoded into configs; not all external services (e.g. W&B) are installed out of the box; in private mode, there is a strong drop in speed/quality and nondeterminism in individual runs.",Yes,"run_dpsda.py:
+total_memory_forecasted: 1450.00 MB
+peak_memory_forecasted: 1100.00 MB","run_dpsda.py:
+percent_cpu: 96.00
+percent_gpu: 0.00"
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,, 
