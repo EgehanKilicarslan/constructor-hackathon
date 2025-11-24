@@ -143,7 +143,7 @@ class GithubAnalyser:
         """
         # get_repo_structure calls _ensure_session internally, so we are safe here.
         structure = self.get_repo_structure()
-        downloaded_files = {"requirements": [], "examples": [], "docs": []}
+        downloaded_files: dict[str, list[Path]] = {"requirements": [], "examples": [], "docs": []}
 
         to_download = []
 

@@ -1,59 +1,88 @@
+import logging
+import os
+from pathlib import Path
 from typing import Any
 
+import fitz
+from dotenv import load_dotenv
 from langchain_core.messages import HumanMessage, SystemMessage
-from langchain_openai import ChatOpenAI
-from pydantic import PrivateAttr
+from langchain_google_genai import ChatGoogleGenerativeAI
+from pydantic import BaseModel
 
-from adapter import StatelessConstructorAdapter
+logger = logging.getLogger(__name__)
 
 
-class ConstructorModel(ChatOpenAI):
-    _adapter: StatelessConstructorAdapter = PrivateAttr()
+class UploadedFile(BaseModel):
+    filename: str
+    path: Path
+    content: str | bytes
 
+
+class ChatModel:
     def __init__(
         self,
-        adapter: StatelessConstructorAdapter | None = None,
-        model: str = "gpt-4o-mini",
-        **kwargs,
+        model: str = "gemini-2.5-flash",
+        system_prompt: str = "You are a helpful assistant.",
+        temperature: float = 0.2,  # For file analysis, lower temperature for more accurate answers
     ) -> None:
-        if adapter is None:
-            _adapter = StatelessConstructorAdapter(llm_alias=model)
-        else:
-            _adapter = adapter
+        load_dotenv()
+        api_key = os.getenv("GEMINI_API_KEY")
+        if not api_key:
+            raise ValueError("GEMINI_API_KEY not found in environment variables.")
 
-        kwargs["api_key"] = "unused"
-        kwargs["base_url"] = f"{_adapter.api_url}/knowledge-models/{_adapter.km_id}"
-        kwargs["model"] = _adapter.llm_alias
+        self._llm = ChatGoogleGenerativeAI(
+            google_api_key=api_key,
+            model=model,
+            temperature=temperature,
+        )
+        self._system_prompt = system_prompt
+        self._uploaded_files: list[UploadedFile] = []
 
-        super().__init__(**kwargs)
-        self._adapter = _adapter
+    def add_document(self, file: Path) -> None:
+        """Dosyayı yükler ve içeriğini okur."""
+        if not file.exists():
+            raise FileNotFoundError(f"Dosya bulunamadı: {file}")
 
-    def _get_request_payload(self, *args, **kwargs) -> dict[Any, Any]:
-        res = super()._get_request_payload(*args, **kwargs)
-        res["extra_headers"] = self._adapter._get_headers()
-        res["extra_headers"]["X-KM-Extension"] = "direct_llm"
+        with file.open("rb") as f:
+            content = f.read()
 
-        return res
+        extracted_text = ""
+        if file.suffix.lower() == ".pdf":
+            extracted_text = self._parse_pdf(content)
+        elif file.suffix.lower() in [".txt", ".md", ".py", ".csv"]:
+            extracted_text = content.decode("utf-8", errors="ignore")
 
-    def send(self, human: str, system: str | None = None) -> str | list[str | dict[Any, Any]]:
-        messages: list[Any] = []
-        if system is not None:
-            messages.append(SystemMessage(content=system))
-        messages.append(HumanMessage(content=human))
+        uploaded_file = UploadedFile(filename=file.name, path=file, content=extracted_text)
+        self._uploaded_files.append(uploaded_file)
+        logger.debug(f"Uploaded file: {uploaded_file}")
 
-        return super().invoke(messages).content
+    def add_documents(self, files: list[Path]) -> None:
+        for file in files:
+            self.add_document(file)
 
-    # --- new methods: document helpers that delegate to the adapter ---
-    def add_document(self, file_path: str) -> dict | None:
-        """
-        Upload a file to the Constructor knowledge model via the adapter.
-        Returns the adapter's JSON response or raises on error.
-        """
-        return self._adapter.add_document(file_path)
+    def _parse_pdf(self, file_bytes: bytes) -> str:
+        try:
+            with fitz.open(stream=file_bytes, filetype="pdf") as doc:
+                text = ""
+                for page in doc:
+                    text += str(page.get_text()) + "\n"
+            return text
+        except Exception as e:
+            raise ValueError(f"Failed to parse PDF file: {e}")
 
-    def add_facts(self, content: dict) -> dict | None:
-        """
-        Add key/value facts to the KM by creating a temporary markdown and
-        uploading it via the adapter (uses Adapter.add_facts).
-        """
-        return self._adapter.add_facts(content)
+    def send(self, user_message: str) -> str | list[str | dict[Any, Any]] | None:
+        file_context = ""
+        if self._uploaded_files:
+            for file in self._uploaded_files:
+                file_context += f"\nFilename: {file.filename}\nFilepath: {file.path.as_posix()}\nContent:\n{file.content}\n"
+
+        messages = [
+            SystemMessage(content=self._system_prompt + "\n\n" + file_context),
+            HumanMessage(content=user_message),
+        ]
+
+        try:
+            response = self._llm.invoke(messages)
+            return response.content
+        except Exception as e:
+            logger.error(f"Error during LLM invocation: {e}")
