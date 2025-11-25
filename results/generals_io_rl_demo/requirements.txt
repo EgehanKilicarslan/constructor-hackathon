@@ -1,0 +1,2 @@
+generals-bots
+pygame # Required for 'render_mode="human"' if you enable GUI rendering locally. Not strictly needed for headless Docker execution.

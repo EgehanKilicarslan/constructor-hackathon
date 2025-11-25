@@ -1,7 +1,9 @@
 import base64
 import logging
+import os
 import re
 import shutil
+import stat
 from pathlib import Path
 
 import requests
@@ -10,7 +12,7 @@ logger = logging.getLogger(__name__)
 
 
 class GithubAnalyser:
-    def __init__(self, repo_url: str, token: str | None = None, save_path: Path = Path("/tmp")):
+    def __init__(self, repo_url: str, token: str | None = None, save_path: Path = Path("tmp")):
         """
         Initializes the GithubAnalyser.
 
@@ -70,9 +72,17 @@ class GithubAnalyser:
             self.session = None
 
         # Cleanup: Remove the entire directory tree
+        def _on_rm_error(func, path, exc_info):
+            # Try to fix permissions and retry
+            try:
+                os.chmod(path, stat.S_IWUSR | stat.S_IRUSR)
+                func(path)
+            except Exception as e:
+                logger.debug(f"Retry failed for {path}: {e}")
+
         try:
             if self.save_dir.exists():
-                shutil.rmtree(self.save_dir)
+                shutil.rmtree(self.save_dir, onerror=_on_rm_error)
                 logger.info(f"Cleanup successful: Removed {self.save_dir}")
         except Exception as e:
             logger.warning(f"Failed to cleanup directory {self.save_dir}: {e}")

@@ -1,5 +1,8 @@
 import logging
+import os
 import re
+import stat
+import time
 from pathlib import Path
 
 import fitz  # PyMuPDF
@@ -9,7 +12,7 @@ logger = logging.getLogger(__name__)
 
 
 class ArticleAnalyser:
-    def __init__(self, url: str, filename: str = "article.pdf", save_path: Path = Path("/tmp")):
+    def __init__(self, url: str, filename: str = "article.pdf", save_path: Path = Path("tmp")):
         self.url = url
         self.filename = filename
         self.save_path = save_path
@@ -48,8 +51,32 @@ class ArticleAnalyser:
         """Deletes the downloaded file. (Public method)"""
         try:
             if self.file_path.exists():
-                self.file_path.unlink()
-                logger.debug(f"Cleaned up downloaded article at {self.file_path}")
+                # Try a few times in case the file is transiently locked
+                for attempt in range(3):
+                    try:
+                        self.file_path.unlink()
+                        logger.debug(f"Cleaned up downloaded article at {self.file_path}")
+                        break
+                    except PermissionError as pe:
+                        logger.warning(
+                            f"Permission error deleting {self.file_path}, fixing perms and retrying ({attempt + 1}/3): {pe}"
+                        )
+                        try:
+                            os.chmod(self.file_path, stat.S_IWUSR | stat.S_IRUSR)
+                        except Exception as e:
+                            logger.debug(f"Failed to chmod {self.file_path}: {e}")
+                        time.sleep(0.1)
+                else:
+                    logger.warning(f"Could not delete file after retries: {self.file_path}")
+
+            # remove parent dir if empty
+            try:
+                if self.save_path.exists() and not any(self.save_path.iterdir()):
+                    self.save_path.rmdir()
+                    logger.debug(f"Removed empty directory {self.save_path}")
+            except Exception as e:
+                logger.debug(f"Failed to remove directory {self.save_path}: {e}")
+
         except Exception as e:
             logger.warning(f"Failed to clean up file {self.file_path}: {e}")
 
