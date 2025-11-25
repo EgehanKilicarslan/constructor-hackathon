@@ -132,7 +132,7 @@ def generate_solution(state: AgentState) -> Dict[str, str]:
     * **Python Version:** Do NOT use old versions like `3.10-slim-buster`. You MUST use **`python:3.11-slim`** (or newer) as the base image to ensure compatibility with modern libraries.
     * **Docker Copy Logic:** When copying configuration files that might be optional (specifically `.env`), you MUST use the wildcard syntax to prevent build failures if the file is missing.
         * *Incorrect:* `COPY .env ./`
-        * *Correct:* `COPY .env* ./`
+        * *Correct:* `COPY main.py .env* ./`
     * **Formatting:** Ensure the code is clean, PEP8 compliant, and well-commented.
 
     **JSON & Output Safety Rules (CRITICAL):**
