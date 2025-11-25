@@ -15,10 +15,7 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy the Python application code
-COPY main.py .
-
-# Copy optional .env files (using wildcard to prevent build failure if missing)
-COPY .env* ./
+COPY main.py .env* ./
 
 # Command to run the application
 CMD ["python", "main.py"]
